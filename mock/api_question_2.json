@@ -1,0 +1,87 @@
+{
+    "status": 200,
+    "data": {
+        "forms": [
+            {
+                "name": "type",
+                "question": "무알콜 맥주를 드셔본적 있나요?",
+                "required": true,
+                "type": "radio",
+                "placeholder": [
+                    {
+                        "label": "네",
+                        "value": "yes",
+                        "checked": false
+                    },
+                    {
+                        "label": "아니오",
+                        "value": "no",
+                        "checked": false
+                    }
+                ],
+                "validate": [
+                    {
+                        "type": "minMaxLength",
+                        "target": [1, "-"],
+                        "validateText": "반드시 한 개는 선택해야 합니다."
+                    }
+                ]
+            },
+            {
+                "name": "pairing",
+                "question": "무알콜 맥주를 선택한다면 어떤 이유에서 고르게 되나요?",
+                "required": true,
+                "type": "radioWithInput",
+                "placeholder": [
+                    {
+                        "label": "술자리를 즐기기 위해",
+                        "value": "enjoy",
+                        "checked": false
+                    },
+                    {
+                        "label": "숙취가 부담스러워서",
+                        "value": "health",
+                        "checked": false
+                    },
+                    {
+                        "label": "맛있어서",
+                        "value": "delicuious",
+                        "checked": false
+                    },
+                    {
+                        "label": "저렴해서",
+                        "value": "chip",
+                        "checked": false
+                    },
+                    {
+                        "label": "기타",
+                        "value": "extra",
+                        "checked": false
+                    }
+                ],
+                "validate": [
+                    {
+                        "type": "minMaxLength",
+                        "target": [1, "-"],
+                        "validateText": "반드시 한 개는 선택해야 합니다."
+                    }
+                ]
+            },
+            {
+                "name": "best",
+                "question": "본인의 먹어본 최고의 무알콜 음료를 말해주세요",
+                "required": true,
+                "type": "text",
+                "placeholder": "",
+                "validate": [
+                    {
+                        "type": "minMaxLength",
+                        "target": [2, "-"],
+                        "validateText": "없다면 '없음'을 입력해주세요"
+                    }
+                ]
+            }
+        ],
+        "escapeValidate": []
+    }
+}
