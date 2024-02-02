@@ -1,17 +1,16 @@
 //
-//  QuestionViewController.swift
+//  QuestionTestViewController.swift
 //  Subvey_Mission
 //
-//  Created by 김도현 on 2024/01/31.
+//  Created by 김도현 on 2024/02/02.
 //
 
 import UIKit
 import SnapKit
 
 class QuestionViewController: UIViewController {
-    
-    let forms: [Form]
-    let currentIndex: Int
+
+    let formManager: FormManager
     
     private let textField: UITextField = {
         let field = UITextField()
@@ -27,9 +26,8 @@ class QuestionViewController: UIViewController {
         return btn
     }()
     
-    init(currentIndex: Int, forms: [Form]) {
-        self.currentIndex = currentIndex
-        self.forms = forms
+    init(formManager: FormManager) {
+        self.formManager = formManager
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -54,47 +52,83 @@ class QuestionViewController: UIViewController {
             make.height.equalTo(30)
         }
         
-        if currentIndex == -1 {
-            textField.isEnabled = false
-            textField.text = "설문조사가 완료되었습니다."
-            textField.textAlignment = .center
-            btn.setTitle("완료", for: .normal)
-            btn.addTarget(self, action: #selector(doneQuestion), for: .touchUpInside)
-        } else {
+        if let currentForm = formManager.getCurrentForm() {
             btn.addTarget(self, action: #selector(nextQuestion), for: .touchUpInside)
-            switch forms[currentIndex].placeholder {
+            
+            switch currentForm.placeholder {
             case .string(let placeholder):
                 textField.placeholder = placeholder
             case .int(_):
                 break
             case .bool(_):
                 break
+            case .dictionary(_):
+                break
             }
+        } else {
+            textField.isEnabled = false
+            textField.text = "설문조사가 완료되었습니다."
+            textField.textAlignment = .center
+            btn.setTitle("완료", for: .normal)
+            btn.addTarget(self, action: #selector(doneQuestion), for: .touchUpInside)
         }
     }
     
     @objc func nextQuestion() {
-        let nextIndex = currentIndex + 1
-        if forms.count > nextIndex {
-            let vc = QuestionViewController(currentIndex: currentIndex + 1, forms: forms)
-            self.navigationController?.pushViewController(vc, animated: true)
-        } else {
-            let vc = QuestionViewController(currentIndex: -1, forms: forms)
-            self.navigationController?.pushViewController(vc, animated: true)
+        guard let currentForm = formManager.getCurrentForm() else { return }
+        var answer: Any
+        switch currentForm.placeholder {
+        case .string(let stringAnswer):
+            answer = stringAnswer
+        case .int(let intAnswer):
+            answer = intAnswer
+        case .bool(let boolAnswer):
+            answer = boolAnswer
+        case .dictionary(let dictionaryAnswers):
+            var answers: [String: [String]] = [:]
+            for dictionaryAnswer in dictionaryAnswers {
+                if dictionaryAnswer.checked {
+                    answers[dictionaryAnswer.label, default: []].append(dictionaryAnswer.value)
+                }
+            }
+            answer = answers
         }
+        formManager.updateValue(question: currentForm.question, answer: answer)
+        formManager.nextQuestion()
+        let vc = QuestionViewController(formManager: formManager)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    @objc func doneQuestion() {        
+    @objc func doneQuestion() {
         let apiHandler = APIHandler()
-        apiHandler.fetchQuestion(type: Answer.self, apiType: .answer, typeID: "common") { [weak self] answer in
-            let nextTypeID = answer.data.nextTypeId
-            apiHandler.fetchQuestion(type: Question.self, apiType: .question, typeID: nextTypeID) { [weak self] question in
-                let forms = question.data.forms
-                let vc = QuestionViewController(currentIndex: 0, forms: forms)
+        print(formManager.answers)
+        apiHandler.fetchQuestion(type: Answer.self, apiType: .answer, typeID: formManager.typeId, sendData: formManager.answers) { [weak self] answer in
+            guard let self else { return }
+            if answer.data.nextTypeId == nil {
                 DispatchQueue.main.async {
-                    self?.navigationController?.pushViewController(vc, animated: true)
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+                return
+            }
+            self.formManager.typeId = answer.data.nextTypeId!
+            apiHandler.fetchQuestion(type: Question.self, apiType: .question, typeID: self.formManager.typeId) { [weak self] question in
+                guard let self else { return }
+                let currentIndex = formManager.forms.count - 1
+                self.formManager.currentIndex = currentIndex
+                self.formManager.forms.append(contentsOf: question.data.forms)
+                self.formManager.nextQuestion()
+                if self.formManager.currentIndex != nil {
+                    DispatchQueue.main.async {
+                        let vc = QuestionViewController(formManager: self.formManager)
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
                 }
             }
         }
     }
+
 }

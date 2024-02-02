@@ -11,18 +11,35 @@ struct APIHandler {
     
     enum ApiType: String {
         case question = "/question"
-        case answer = "/answer"
+        case answer = "/answers"
     }
     
-    let baseUrl: String = "https://512ab7c7-e29e-4a64-ace6-d1e98a5ce40f.mock.pstmn.io/api/"
-    func fetchQuestion<T: Codable>(type: T.Type, apiType: ApiType, typeID: String, complete: @escaping (T) -> Void) {
+    let baseUrl: String = "https://512ab7c7-e29e-4a64-ace6-d1e98a5ce40f.mock.pstmn.io/api"
+    func fetchQuestion<T: Codable>(type: T.Type, apiType: ApiType, typeID: String, sendData: [String: Any]? = nil, complete: @escaping (T) -> Void) {
         guard let url = URL(string: baseUrl + apiType.rawValue + "/" + typeID) else { return }
-        URLSession.shared.dataTask(with: url) { data, response, error in
+        var request = URLRequest(url: url)
+        print(url.absoluteString)
+        if apiType == .answer {
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            if let sendData {
+                do {
+                    let sendJson = try JSONSerialization.data(withJSONObject: sendData, options: [.prettyPrinted])
+                    request.httpBody = sendJson
+                } catch let e {
+                    print(e.localizedDescription)
+                }
+            } else {
+                print("데이터가 존재하지 않습니다.")
+            }
+        }
+        URLSession.shared.dataTask(with: request) { data, response, error in
             if let error {
                 print(error.localizedDescription)
                 return
             }
             guard let data else { return }
+            print(String(data: data, encoding: .utf8))
             let decoder = JSONDecoder()
             do {
                 let question = try decoder.decode(T.self, from: data)
@@ -86,6 +103,13 @@ enum MultiValue: Codable {
     case int(Int)
     case string(String)
     case bool(Bool)
+    case dictionary([Option])
+    
+    struct Option: Codable {
+        let label: String
+        let value: String
+        let checked: Bool
+    }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
@@ -95,6 +119,8 @@ enum MultiValue: Codable {
             self = .string(stringValue)
         } else if let boolValue = try? container.decode(Bool.self) {
             self = .bool(boolValue)
+        } else if let dictionaryValue = try? container.decode([Option].self) {
+            self = .dictionary(dictionaryValue)
         } else {
             throw DecodingError.typeMismatch(
                 MultiValue.self,
@@ -113,6 +139,8 @@ enum MultiValue: Codable {
             try container.encode(stringValue)
         case .bool(let boolValue):
             try container.encode(boolValue)
+        case .dictionary(let dictionary):
+            try container.encode(dictionary)
         }
     }
 }
@@ -207,5 +235,5 @@ struct Answer: Codable {
 
 struct AnswerInfo: Codable {
     let isSuccess: Bool
-    let nextTypeId: String
+    let nextTypeId: String?
 }
