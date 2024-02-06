@@ -39,7 +39,6 @@ struct APIHandler {
                 return
             }
             guard let data else { return }
-            print(String(data: data, encoding: .utf8))
             let decoder = JSONDecoder()
             do {
                 let question = try decoder.decode(T.self, from: data)

@@ -21,7 +21,6 @@ class ViewController: UIViewController {
             self.formManager.forms = forms
             self.formManager.currentIndex = forms.isEmpty ? nil : 0
             DispatchQueue.main.async {
-//                self?.navigationController?.pushViewController(QuestionViewController(currentIndex: 0, forms: forms), animated: true)
                 self.navigationController?.pushViewController(QuestionViewController(formManager: self.formManager), animated: true)
             }
         }
