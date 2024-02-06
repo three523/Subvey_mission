@@ -19,6 +19,8 @@ class QuestionViewController: UIViewController {
         field.textColor = .black
         return field
     }()
+    
+    private let formView: FormView = FormView(views: [], type: .text)
     private let btn: UIButton = {
         let btn = UIButton()
         btn.setTitle("next", for: .normal)
@@ -37,23 +39,33 @@ class QuestionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(textField)
+        view.addSubview(formView)
         view.addSubview(btn)
         
-        textField.snp.makeConstraints { make in
+//        textField.snp.makeConstraints { make in
+//            make.center.equalTo(view.snp.center)
+//            make.left.right.equalToSuperview().inset(16)
+//
+//        }
+        formView.snp.makeConstraints { make in
             make.center.equalTo(view.snp.center)
             make.left.right.equalToSuperview().inset(16)
-
         }
+        
         btn.snp.makeConstraints { make in
-            make.top.equalTo(textField.snp.bottom).offset(10)
-            make.centerX.equalTo(textField.snp.centerX)
+            make.top.equalTo(formView.snp.bottom).offset(10)
+            make.centerX.equalTo(formView.snp.centerX)
             make.width.equalTo(60)
             make.height.equalTo(30)
         }
         
         if let currentForm = formManager.getCurrentForm() {
             btn.addTarget(self, action: #selector(nextQuestion), for: .touchUpInside)
+            
+            let questionView = UILabel()
+            questionView.font = .systemFont(ofSize: 16, weight: .regular)
+            questionView.text = currentForm.question
+            formView.addFormView(views: [questionView, textField])
             
             switch currentForm.placeholder {
             case .string(let placeholder):
@@ -95,8 +107,9 @@ class QuestionViewController: UIViewController {
         }
         formManager.updateValue(question: currentForm.question, answer: answer)
         formManager.nextQuestion()
-        let vc = QuestionViewController(formManager: formManager)
-        self.navigationController?.pushViewController(vc, animated: true)
+        formView.animate()
+//        let vc = QuestionViewController(formManager: formManager)
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func doneQuestion() {
