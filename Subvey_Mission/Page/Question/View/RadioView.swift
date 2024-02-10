@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RadioView: UIStackView {
+class RadioView: UIStackView, FormCheckable {
 
     let radioButton: UIButton = {
         let button = UIButton()
@@ -38,6 +38,8 @@ class RadioView: UIStackView {
     }
     
     var value: String? = nil
+    var radioUpdateHandler: ((String) -> Void)?
+    var radioInputUpdateHandler: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -48,6 +50,24 @@ class RadioView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func setupUi(option: MultiValue.Option) {
+        radioButton.isSelected = option.checked
+        answerLabel.text = option.label
+        value = option.value
+    }
+    
+    func getAnswer() -> [String : Any]? {
+        guard let value else { return nil }
+        return radioButton.isSelected ? [value: true] : nil
+    }
+    
+    func updateSelected(isSelected: Bool) {
+        radioButton.isSelected = isSelected
+    }
+    
+    func isRadioSelected() -> Bool {
+        return radioButton.isSelected
+    }
 }
 
 private extension RadioView {
@@ -55,6 +75,7 @@ private extension RadioView {
         setupInit()
         setupSubViews()
         setupAutoLayout()
+        setupButton()
     }
     
     func setupInit() {
@@ -72,5 +93,16 @@ private extension RadioView {
         radioButton.snp.makeConstraints { make in
             make.width.height.equalTo(radioButtonSize)
         }
+    }
+    
+    func setupButton() {
+        radioButton.addTarget(self, action: #selector(radioButtonClick), for: .touchUpInside)
+    }
+    
+    @objc func radioButtonClick() {
+        radioButton.isSelected = true
+        guard let value else { return }
+        radioUpdateHandler?(value)
+        radioInputUpdateHandler?()
     }
 }

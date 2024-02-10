@@ -36,10 +36,7 @@ final class TextFormView: UIStackView, FormRenderable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func next(nextForm: Form) -> [String : Any]? {
-        let answer = answerTextField.text ?? ""
-        let name = form.name
-        
+    func next(nextForm: Form){
         DispatchQueue.main.async {
             self.questionLabel.text = nextForm.question
             switch nextForm.placeholder {
@@ -48,14 +45,20 @@ final class TextFormView: UIStackView, FormRenderable {
             default: break
             }
         }
-        
-        return [name: answer]
     }
     
     func getAnswer() -> [String : Any]? {
         let answer = answerTextField.text ?? ""
         let name = form.name
+        
+        resetTextField()
+        
         return [name: answer]
+    }
+    
+    private func resetTextField() {
+        answerTextField.text = ""
+        answerTextField.resignFirstResponder()
     }
 }
 

@@ -11,7 +11,8 @@ final class QuestionViewModel {
     private let formManager: FormManager
     private let apiHandler: APIHandler
     
-    var formViewUpdateHandler: ((Form?) -> Void)? = nil
+    var formViewUpdateHandler: ((Form?) -> Void)?
+    var subveyCompleteHandler: (() -> Void)?
     
     init(formManager: FormManager, apiHandler: APIHandler) {
         self.formManager = formManager
@@ -19,32 +20,8 @@ final class QuestionViewModel {
     }
     
     func fetchNextQuestion() {
-        if let form = formManager.nextQuestion() {
-            formViewUpdateHandler?(form)
-        } else {
-            apiHandler.submitSubery(typeId: formManager.typeId, sendData: formManager.answers) { [weak self] result in
-                switch result {
-                case .success(let answer):
-                    if let nextTypeId = answer.data.nextTypeId {
-                        self?.formManager.typeId = nextTypeId
-                        self?.apiHandler.fetchSubvey(typeID: nextTypeId) { result in
-                            switch result {
-                            case .success(let subvey):
-                                let forms = subvey.data.forms
-                                self?.formManager.forms = forms
-                                self?.formViewUpdateHandler?(forms.first)
-                            case .failure(let failure):
-                                print(failure.localizedDescription)
-                                //TODO: 연결 설문 내용을 못받은 경우 구현
-                            }
-                        }
-                    }
-                case .failure(let failure):
-                    print(failure.localizedDescription)
-                    //TODO: 설문 전달 후 응답을 못받은 경우 구현
-                }
-            }
-        }
+        let nextForm = formManager.nextQuestion()
+        formViewUpdateHandler?(nextForm)
     }
     
     func updateAnswer(answer: [String: Any]?) {
@@ -60,7 +37,32 @@ final class QuestionViewModel {
         return formManager.getCurrentForm()
     }
     
-    private func submitAnswer() {
-        
+    func submitAnswer() {
+        apiHandler.submitSubery(typeId: formManager.typeId, sendData: formManager.answers) { [weak self] result in
+            switch result {
+            case .success(let answer):
+                if let nextTypeId = answer.data.nextTypeId {
+                    self?.formManager.typeId = nextTypeId
+                    self?.apiHandler.fetchSubvey(typeID: nextTypeId) { result in
+                        switch result {
+                        case .success(let subvey):
+                            let forms = subvey.data.forms
+                            self?.formManager.forms = forms
+                            DispatchQueue.main.async {
+                                self?.formViewUpdateHandler?(forms.first)
+                            }
+                        case .failure(let failure):
+                            print(failure.localizedDescription)
+                            //TODO: 연결 설문 내용을 못받은 경우 구현
+                        }
+                    }
+                } else {
+                    self?.subveyCompleteHandler?()
+                }
+            case .failure(let failure):
+                print(failure.localizedDescription)
+                //TODO: 설문 전달 후 응답을 못받은 경우 구현
+            }
+        }
     }
 }

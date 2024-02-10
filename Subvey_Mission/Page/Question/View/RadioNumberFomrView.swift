@@ -1,13 +1,13 @@
 //
-//  NumberFormView.swift
+//  RadioNumberFomrView.swift
 //  Subvey_Mission
 //
-//  Created by 김도현 on 2024/02/08.
+//  Created by 김도현 on 2024/02/10.
 //
 
 import UIKit
 
-final class NumberFormView: UIStackView, FormRenderable {
+final class RadioNumberFormView: UIStackView, FormRenderable {
     var type: FormType
     var form: Form
     
@@ -17,12 +17,19 @@ final class NumberFormView: UIStackView, FormRenderable {
         label.textColor = .black
         return label
     }()
-    private let answerTextField: UITextField = {
-        let textField = UITextField()
-        textField.font = .systemFont(ofSize: 16, weight: .regular)
-        textField.textColor = .black
-        textField.borderStyle = .roundedRect
-        return textField
+    private lazy var slider: UISlider = {
+        let slider = UISlider()
+        slider.maximumValue = 7
+        slider.minimumValue = 1
+        slider.addTarget(self, action: #selector(updateSlider), for: .valueChanged)
+        return slider
+    }()
+    private let answerLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .systemFont(ofSize: 16, weight: .regular)
+        label.textAlignment = .center
+        return label
     }()
 
     init(form: Form) {
@@ -36,32 +43,26 @@ final class NumberFormView: UIStackView, FormRenderable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func next(nextForm: Form) {
+    func next(nextForm: Form){
         DispatchQueue.main.async {
             self.questionLabel.text = nextForm.question
             switch nextForm.placeholder {
             case .int(let number):
-                self.answerTextField.text = String(number)
+                self.slider.setValue(Float(number), animated: false)
             default: break
             }
         }
     }
     
     func getAnswer() -> [String : Any]? {
-        let answer: Int = Int(self.answerTextField.text ?? "-1") ?? -1
+        let answer = String(Int(slider.value))
         let name = form.name
-        
-        resetTextField()
+                
         return [name: answer]
-    }
-    
-    private func resetTextField() {
-        answerTextField.text = "0"
-        answerTextField.resignFirstResponder()
     }
 }
 
-private extension NumberFormView {
+private extension RadioNumberFormView {
     func setup() {
         setupInit()
         setupSubViews()
@@ -76,7 +77,8 @@ private extension NumberFormView {
     
     func setupSubViews() {
         addArrangedSubview(questionLabel)
-        addArrangedSubview(answerTextField)
+        addArrangedSubview(slider)
+        addArrangedSubview(answerLabel)
     }
     
     func setupForm() {
@@ -84,8 +86,16 @@ private extension NumberFormView {
         
         switch form.placeholder {
         case .int(let number):
-            answerTextField.text = String(number)
+            slider.setValue(Float(number), animated: false)
+            answerLabel.text = String(Int(number))
         default: break
         }
+    }
+    
+    @objc func updateSlider(_ sender: UISlider) {
+        let roundedValue = round(sender.value)
+        
+        sender.setValue(roundedValue, animated: false)
+        answerLabel.text = String(Int(roundedValue))
     }
 }
