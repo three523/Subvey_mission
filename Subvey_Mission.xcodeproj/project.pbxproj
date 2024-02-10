@@ -16,6 +16,10 @@
 		18B793A62B739B0400BBD62C /* RadioWithInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B793A52B739B0400BBD62C /* RadioWithInputView.swift */; };
 		18B793A82B73A07A00BBD62C /* RadioFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B793A72B73A07A00BBD62C /* RadioFormView.swift */; };
 		18B94DAB2B6CBA3A00EEDCF6 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B94DAA2B6CBA3A00EEDCF6 /* QuestionViewController.swift */; };
+		18B9F91B2B76B2A300D67073 /* FormManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B9F91A2B76B2A300D67073 /* FormManager.swift */; };
+		18B9F91D2B76B7EB00D67073 /* FormCheckable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B9F91C2B76B7EB00D67073 /* FormCheckable.swift */; };
+		18B9F91F2B76C84500D67073 /* RadioNumberFomrView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B9F91E2B76C84500D67073 /* RadioNumberFomrView.swift */; };
+		18B9F9212B76D5B700D67073 /* SubmitSubveyFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B9F9202B76D5B700D67073 /* SubmitSubveyFormView.swift */; };
 		18C84A172B74C56E00143095 /* QuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C84A162B74C56E00143095 /* QuestionViewModel.swift */; };
 		18C84A192B74F27900143095 /* NumberFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C84A182B74F27900143095 /* NumberFormView.swift */; };
 		18C84A1C2B75027500143095 /* Subvey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C84A1B2B75027500143095 /* Subvey.swift */; };
@@ -37,6 +41,10 @@
 		18B793A52B739B0400BBD62C /* RadioWithInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioWithInputView.swift; sourceTree = "<group>"; };
 		18B793A72B73A07A00BBD62C /* RadioFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioFormView.swift; sourceTree = "<group>"; };
 		18B94DAA2B6CBA3A00EEDCF6 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
+		18B9F91A2B76B2A300D67073 /* FormManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormManager.swift; sourceTree = "<group>"; };
+		18B9F91C2B76B7EB00D67073 /* FormCheckable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormCheckable.swift; sourceTree = "<group>"; };
+		18B9F91E2B76C84500D67073 /* RadioNumberFomrView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioNumberFomrView.swift; sourceTree = "<group>"; };
+		18B9F9202B76D5B700D67073 /* SubmitSubveyFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitSubveyFormView.swift; sourceTree = "<group>"; };
 		18C84A162B74C56E00143095 /* QuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewModel.swift; sourceTree = "<group>"; };
 		18C84A182B74F27900143095 /* NumberFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormView.swift; sourceTree = "<group>"; };
 		18C84A1B2B75027500143095 /* Subvey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subvey.swift; sourceTree = "<group>"; };
@@ -109,6 +117,9 @@
 				18B7939F2B737EA500BBD62C /* RadioWithInputFormView.swift */,
 				18B793A32B73828D00BBD62C /* RadioView.swift */,
 				18B793A52B739B0400BBD62C /* RadioWithInputView.swift */,
+				18B9F91C2B76B7EB00D67073 /* FormCheckable.swift */,
+				18B9F91E2B76C84500D67073 /* RadioNumberFomrView.swift */,
+				18B9F9202B76D5B700D67073 /* SubmitSubveyFormView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -157,6 +168,7 @@
 				18D56F082B69234600B19F24 /* LaunchScreen.storyboard */,
 				18D56F0B2B69234600B19F24 /* Info.plist */,
 				18B7939B2B73626100BBD62C /* FormRenderable.swift */,
+				18B9F91A2B76B2A300D67073 /* FormManager.swift */,
 			);
 			path = Subvey_Mission;
 			sourceTree = "<group>";
@@ -238,9 +250,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				18B793A62B739B0400BBD62C /* RadioWithInputView.swift in Sources */,
+				18B9F91F2B76C84500D67073 /* RadioNumberFomrView.swift in Sources */,
+				18B9F91B2B76B2A300D67073 /* FormManager.swift in Sources */,
 				18B94DAB2B6CBA3A00EEDCF6 /* QuestionViewController.swift in Sources */,
 				18B7939E2B736E2B00BBD62C /* TextFormView.swift in Sources */,
 				18B7939C2B73626100BBD62C /* FormRenderable.swift in Sources */,
+				18B9F9212B76D5B700D67073 /* SubmitSubveyFormView.swift in Sources */,
 				18C84A1C2B75027500143095 /* Subvey.swift in Sources */,
 				18B793A82B73A07A00BBD62C /* RadioFormView.swift in Sources */,
 				18D327F52B721EAA0095823E /* QuestionView.swift in Sources */,
@@ -248,6 +263,7 @@
 				18D56F022B69234400B19F24 /* ViewController.swift in Sources */,
 				18B793A42B73828D00BBD62C /* RadioView.swift in Sources */,
 				18B6EB5C2B6A5B6000F62458 /* APIHandler.swift in Sources */,
+				18B9F91D2B76B7EB00D67073 /* FormCheckable.swift in Sources */,
 				18C84A192B74F27900143095 /* NumberFormView.swift in Sources */,
 				18D56EFE2B69234400B19F24 /* AppDelegate.swift in Sources */,
 				18C84A172B74C56E00143095 /* QuestionViewModel.swift in Sources */,

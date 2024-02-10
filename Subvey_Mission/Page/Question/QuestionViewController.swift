@@ -44,9 +44,18 @@ class QuestionViewController: UIViewController {
                 self?.viewModel.updateAnswer(answer: answer)
             }
         }
+        viewModel.subveyCompleteHandler = { [weak self] in
+            DispatchQueue.main.async {
+                self?.navigationController?.popViewController(animated: true)
+            }
+        }
         
         questionView.onNextButtonTap = { [weak self] in
             self?.viewModel.fetchNextQuestion()
+        }
+        
+        questionView.subveyCompleteHandler = { [weak self] in
+            self?.viewModel.submitAnswer()
         }
     }
 

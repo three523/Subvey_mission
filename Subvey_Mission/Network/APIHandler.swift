@@ -18,7 +18,7 @@ struct APIHandler {
     
     func fetchSubvey(typeID: String, complete: @escaping (Result<Subvey, Error>) -> Void) {
         guard let url = URL(string: baseUrl + "/question/" + typeID) else { return }
-        var request = URLRequest(url: url)
+        let request = URLRequest(url: url)
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error {
                 print(error.localizedDescription)
@@ -55,6 +55,8 @@ struct APIHandler {
     func submitSubery(typeId: String, sendData: [String: Any], completion: @escaping (Result<Answer, Error>) -> Void) {
         guard let url = URL(string: baseUrl + "/answers/" + typeId) else { return }
         var request = URLRequest(url: url)
+        
+        print(sendData)
         
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")

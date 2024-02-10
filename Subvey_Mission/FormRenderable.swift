@@ -7,10 +7,10 @@
 
 import Foundation
 
+//TODO: 이름 고민해보기
 protocol FormRenderable {
     var type: FormType { get }
     var form: Form { get }
-    // 다음질문으로 넘어갈때 입력했던 값을 리턴해줘야함
-    func next(nextForm: Form) -> [String: Any]?
+    func next(nextForm: Form)
     func getAnswer() -> [String: Any]?
 }

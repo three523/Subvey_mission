@@ -10,12 +10,6 @@ import SnapKit
 
 final class QuestionView: UIView {
     
-    enum state {
-        case next
-        case done
-        case other
-    }
-    
     private let stackView: UIStackView = {
         let stackView: UIStackView = UIStackView()
         stackView.axis = .vertical
@@ -34,6 +28,7 @@ final class QuestionView: UIView {
     }()
     
     var onNextButtonTap: (() -> Void)?
+    var subveyCompleteHandler: (() -> Void)?
     
     var inset: CGFloat = 16 {
         didSet {
@@ -48,7 +43,9 @@ final class QuestionView: UIView {
         }
     }
     
-    var currentView: UIView? = nil
+    typealias FormView = (UIView & FormRenderable)
+    
+    var currentView: FormView? = nil
     var nextForm: Form? = nil
     
     init(form: Form, frame: CGRect = .zero) {
@@ -59,6 +56,107 @@ final class QuestionView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    @objc func nextQuestion() {
+        if currentView is SubmitSubveyFormView {
+            subveyCompleteHandler?()
+        } else {
+            onNextButtonTap?()
+        }
+    }
+    
+    func next(nextForm: Form?) -> [String: Any]? {
+        if let nextForm = nextForm {
+            let answer = currentView?.getAnswer()
+            self.nextForm = nextForm
+            fadeOut()
+            return answer
+        } else {
+            let answer = currentView?.getAnswer()
+            self.nextForm = nil
+            fadeOut()
+            return answer
+        }
+    }
+    
+    private func updateCurrentView(nextForm: Form?) {
+        guard let nextForm else {
+            guard let form = currentView?.form else { return }
+            let submitFormView = SubmitSubveyFormView(form: form)
+            replaceCurrentView(submitView: submitFormView)
+            return
+        }
+        if shouldReuseView(form: nextForm) {
+            currentView?.next(nextForm: nextForm)
+        } else {
+            let newView = createView(nextForm: nextForm)
+            replaceCurrentView(formView: newView)
+        }
+    }
+    
+    func shouldReuseView(form: Form) -> Bool {
+        guard let currentView else { return false }
+        return viewType(type: form.type) == type(of: currentView)
+    }
+    
+    private func viewType(type: FormType) -> UIView.Type {
+        switch type {
+        case .text:
+            return TextFormView.self
+        case .radio:
+            return RadioFormView.self
+        case .radioWithInput:
+            return RadioWithInputFormView.self
+        case .number:
+            return NumberFormView.self
+        case .radioNumber:
+            return RadioNumberFormView.self
+        case .checkbox:
+            //TODO: CheckBoxFormView 만들기
+            return NumberFormView.self
+        }
+    }
+    
+    private func createView(nextForm: Form) -> FormView {
+        let nextFormType = nextForm.type
+        switch nextFormType {
+        case .text:
+            return TextFormView(form: nextForm)
+        case .radio:
+            return RadioFormView(form: nextForm)
+        case .radioWithInput:
+            return RadioWithInputFormView(form: nextForm)
+        case .number:
+            return NumberFormView(form: nextForm)
+        case .radioNumber:
+            return RadioNumberFormView(form: nextForm)
+        case .checkbox:
+            return TextFormView(form: nextForm)
+        }
+    }
+    
+    private func replaceCurrentView(formView: FormView) {
+        guard let currentView else { return }
+        if currentView is SubmitSubveyFormView { btn.setTitle("next", for: .normal) }
+        currentView.removeFromSuperview()
+
+        self.stackView.insertArrangedSubview(formView, at: 0)
+        
+        self.currentView = formView
+    }
+    
+    private func replaceCurrentView(submitView: SubmitSubveyFormView) {
+        guard let currentView else { return }
+        btn.setTitle("제출", for: .normal)
+        currentView.removeFromSuperview()
+        
+        stackView.insertArrangedSubview(submitView, at: 0)
+        self.currentView = submitView
+    }
+}
+
+//MARK: Animation
+extension QuestionView: CAAnimationDelegate {
     
     private func fadeOut() {
         
@@ -106,120 +204,17 @@ final class QuestionView: UIView {
         self.layer.add(fadeAnimation, forKey: "fadein-opacity")
     }
     
-    func next() {
-        fadeOut()
-    }
-    
-    @objc func nextQuestion() {
-        onNextButtonTap?()
-//        formManager.nextQuestion()
-//        if let nextForm = formManager.getCurrentForm() {
-//            next(nextForm: nextForm)
-//        } else {
-//
-//        }
-//        fadeOut()
-    }
-    
-//    func next(nextForm: Form) -> [String: Any]? {
-//        let answer = (currentView as? FormRenderable)?.getAnswer()
-//        if let answer = (currentView as? FormRenderable)?.getAnswer() {
-//            formManager.answers.merge(answer, uniquingKeysWith: { (oldValue, newValue) in newValue })
-//        }
-//        updateCurrentView(nextForm: nextForm)
-//
-//        return answer
-//    }
-    
-    func next(nextForm: Form?) -> [String: Any]? {
-        if let nextForm {
-            let answer = (currentView as? FormRenderable)?.getAnswer()
-            fadeOut()
-            self.nextForm = nextForm
-            return answer
-        } else {
-            //TODO: 설문에 참여해주셔서 감사합니다라는 텍스트와 함께 완료 버튼 생성 구현
-            fadeOut()
-            return nil
-        }
-    }
-    
-    private func updateCurrentView(nextForm: Form) {
-        if shouldReuseView(form: nextForm) {
-            (self.currentView as? FormRenderable)?.next(nextForm: nextForm)
-        } else {
-            let newView = createView(nextForm: nextForm)
-            replaceCurrentView(with: newView)
-        }
-    }
-    
-    func shouldReuseView(form: Form) -> Bool {
-        guard let currentView else { return false }
-        print(viewType(type: form.type), type(of: currentView))
-        return viewType(type: form.type) == type(of: currentView)
-    }
-    
-    private func viewType(type: FormType) -> UIView.Type {
-        switch type {
-        case .text:
-            return TextFormView.self
-        case .radio:
-            return RadioFormView.self
-        case .radioWithInput:
-            return RadioWithInputFormView.self
-        case .number:
-            return NumberFormView.self
-        case .radioNumber:
-            return NumberFormView.self
-        default:
-            return UIView.self
-        }
-    }
-    
-    private func createView(nextForm: Form) -> UIView {
-        let nextFormType = nextForm.type
-        switch nextFormType {
-        case .text:
-            return TextFormView(form: nextForm)
-        case .radio:
-            return RadioFormView(form: nextForm)
-        case .radioWithInput:
-            return RadioWithInputFormView(form: nextForm)
-        case .number:
-            return NumberFormView(form: nextForm)
-        case .radioNumber:
-            return NumberFormView(form: nextForm)
-        default: return UIView()
-        }
-    }
-    
-    private func replaceCurrentView(with newView: UIView) {
-        guard let currentView else { return }
-        currentView.removeFromSuperview()
-
-        stackView.insertArrangedSubview(newView, at: 0)
-        self.currentView = newView
-    }
-}
-
-extension QuestionView: CAAnimationDelegate {
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        if flag {
-            if let nextForm {
-                updateCurrentView(nextForm: nextForm)
-            }
-            fadeIn()
+        if let nextForm {
+            updateCurrentView(nextForm: nextForm)
+        } else {
+            updateCurrentView(nextForm: nil)
         }
+        fadeIn()
     }
 }
 
-extension QuestionView {
-    func addFormView(views: [UIView]) {
-        views.forEach { view in
-            stackView.addArrangedSubview(view)
-        }
-    }
-}
+//MARK: Setup
 private extension QuestionView {
     
     func setup(form: Form) {
@@ -240,17 +235,7 @@ private extension QuestionView {
     }
     
     func setupForm(form: Form) {
-        switch form.type {
-        case .text:
-            currentView = TextFormView(form: form)
-        case .radio:
-            currentView = RadioFormView(form: form)
-        case .radioWithInput:
-            currentView = RadioWithInputFormView(form: form)
-        case .number:
-            currentView = NumberFormView(form: form)
-        default: break
-        }
+        currentView = createView(nextForm: form)
         
         guard let currentView = currentView else { return }
         stackView.insertArrangedSubview(currentView, at: 0)

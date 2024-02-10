@@ -31,16 +31,13 @@ class RadioFormView: UIStackView, FormRenderable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func next(nextForm: Form) -> [String : Any]? {
-        let answer = getAnswer()
-        
+    func next(nextForm: Form) {
         questionLabel.text = form.question
         switch nextForm.placeholder {
         case .dictionary(let options):
             updateRadioViews(options: options)
         default: break
         }
-        return answer
     }
     
     func updateRadioViews(options: [MultiValue.Option]) {
@@ -63,6 +60,7 @@ class RadioFormView: UIStackView, FormRenderable {
     private func addRadioViews(count: Int) {
         for _ in 0..<count {
             let radioInputView = RadioView()
+            radioInputView.radioUpdateHandler = createRadioUpdateHandler()
             radioViews.append(radioInputView)
             addArrangedSubview(radioInputView)
         }
@@ -86,6 +84,16 @@ class RadioFormView: UIStackView, FormRenderable {
         }
         guard let value else { return nil }
         return [name: value]
+    }
+    
+    private func createRadioUpdateHandler() -> ((String) -> Void)? {
+        return { [weak self] value in
+            self?.radioViews.forEach { radioView in
+                if radioView.value != value {
+                    radioView.updateSelected(isSelected: false)
+                }
+            }
+        }
     }
 }
 
