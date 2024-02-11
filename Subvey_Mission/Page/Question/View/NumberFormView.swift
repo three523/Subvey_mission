@@ -10,6 +10,7 @@ import UIKit
 final class NumberFormView: UIStackView, FormRenderable {
     var type: FormType
     var form: Form
+    var answer: Any?
     
     private let questionLabel: UILabel = {
         let label = UILabel()
@@ -25,10 +26,14 @@ final class NumberFormView: UIStackView, FormRenderable {
         return textField
     }()
 
-    init(form: Form) {
+    init(form: Form, answer: Any? = nil) {
         self.type = .text
         self.form = form
+        self.answer = answer
         super.init(frame: .zero)
+        if let answer = answer as? Int {
+            answerTextField.text = String(answer)
+        }
         setup()
     }
     
@@ -36,13 +41,18 @@ final class NumberFormView: UIStackView, FormRenderable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func next(nextForm: Form) {
+    func next(nextForm: Form, answer: Any? = nil) {
+        self.form = nextForm
         DispatchQueue.main.async {
             self.questionLabel.text = nextForm.question
-            switch nextForm.placeholder {
-            case .int(let number):
-                self.answerTextField.text = String(number)
-            default: break
+            if let answer = answer as? Int {
+                self.answerTextField.text = String(answer)
+            } else {
+                switch nextForm.placeholder {
+                case .int(let number):
+                    self.answerTextField.text = String(number)
+                default: break
+                }
             }
         }
     }
@@ -82,10 +92,14 @@ private extension NumberFormView {
     func setupForm() {
         questionLabel.text = form.question
         
-        switch form.placeholder {
-        case .int(let number):
-            answerTextField.text = String(number)
-        default: break
+        if let answer = answer as? Int {
+            answerTextField.text = String(answer)
+        } else {
+            switch form.placeholder {
+            case .int(let number):
+                answerTextField.text = String(number)
+            default: break
+            }
         }
     }
 }

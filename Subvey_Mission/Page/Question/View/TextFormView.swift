@@ -10,6 +10,7 @@ import UIKit
 final class TextFormView: UIStackView, FormRenderable {
     var type: FormType
     var form: Form
+    var answer: Any?
     
     private let questionLabel: UILabel = {
         let label = UILabel()
@@ -25,10 +26,14 @@ final class TextFormView: UIStackView, FormRenderable {
         return textField
     }()
 
-    init(form: Form) {
+    init(form: Form, answer: Any? = nil) {
         self.type = .text
         self.form = form
         super.init(frame: .zero)
+        
+        if let answer = answer as? String {
+            answerTextField.text = answer
+        }
         setup()
     }
     
@@ -36,7 +41,12 @@ final class TextFormView: UIStackView, FormRenderable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func next(nextForm: Form){
+    func next(nextForm: Form, answer: Any? = nil){
+        self.form = nextForm
+        
+        if let answer = answer as? String {
+            answerTextField.text = answer
+        }
         DispatchQueue.main.async {
             self.questionLabel.text = nextForm.question
             switch nextForm.placeholder {

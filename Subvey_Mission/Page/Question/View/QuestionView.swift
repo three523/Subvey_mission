@@ -10,6 +10,11 @@ import SnapKit
 
 final class QuestionView: UIView {
     
+    enum QuestionMove {
+        case next
+        case back
+    }
+    
     private let stackView: UIStackView = {
         let stackView: UIStackView = UIStackView()
         stackView.axis = .vertical
@@ -28,7 +33,10 @@ final class QuestionView: UIView {
     }()
     
     var onNextButtonTap: (() -> Void)?
+    var onBackButtonTap: (() -> Void)?
     var subveyCompleteHandler: (() -> Void)?
+    
+    private var move: QuestionMove = .next
     
     var inset: CGFloat = 16 {
         didSet {
@@ -57,7 +65,7 @@ final class QuestionView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func nextQuestion() {
+    @objc private func nextQuestion() {
         if currentView is SubmitSubveyFormView {
             subveyCompleteHandler?()
         } else {
@@ -65,21 +73,33 @@ final class QuestionView: UIView {
         }
     }
     
+    @objc private func backQuestion() {
+        onBackButtonTap?()
+    }
+    
+    func back(prevForm: Form?, answer: Any?) {
+        updateCurrentView(nextForm: prevForm, answer: answer)
+        move = .back
+        fadeIn(move: move)
+    }
+    
     func next(nextForm: Form?) -> [String: Any]? {
         if let nextForm = nextForm {
             let answer = currentView?.getAnswer()
             self.nextForm = nextForm
-            fadeOut()
+            move = .next
+            fadeOut(move: .next)
             return answer
         } else {
             let answer = currentView?.getAnswer()
             self.nextForm = nil
-            fadeOut()
+            move = .next
+            fadeOut(move: .next)
             return answer
         }
     }
     
-    private func updateCurrentView(nextForm: Form?) {
+    private func updateCurrentView(nextForm: Form?, answer: Any? = nil) {
         guard let nextForm else {
             guard let form = currentView?.form else { return }
             let submitFormView = SubmitSubveyFormView(form: form)
@@ -87,9 +107,9 @@ final class QuestionView: UIView {
             return
         }
         if shouldReuseView(form: nextForm) {
-            currentView?.next(nextForm: nextForm)
+            currentView?.next(nextForm: nextForm, answer: answer)
         } else {
-            let newView = createView(nextForm: nextForm)
+            let newView = createView(nextForm: nextForm, answer: answer)
             replaceCurrentView(formView: newView)
         }
     }
@@ -117,21 +137,21 @@ final class QuestionView: UIView {
         }
     }
     
-    private func createView(nextForm: Form) -> FormView {
+    private func createView(nextForm: Form, answer: Any? = nil) -> FormView {
         let nextFormType = nextForm.type
         switch nextFormType {
         case .text:
-            return TextFormView(form: nextForm)
+            return TextFormView(form: nextForm, answer: answer)
         case .radio:
-            return RadioFormView(form: nextForm)
+            return RadioFormView(form: nextForm, answer: answer)
         case .radioWithInput:
-            return RadioWithInputFormView(form: nextForm)
+            return RadioWithInputFormView(form: nextForm, answer: answer)
         case .number:
-            return NumberFormView(form: nextForm)
+            return NumberFormView(form: nextForm, answer: answer)
         case .radioNumber:
-            return RadioNumberFormView(form: nextForm)
+            return RadioNumberFormView(form: nextForm, answer: answer)
         case .checkbox:
-            return TextFormView(form: nextForm)
+            return TextFormView(form: nextForm, answer: answer)
         }
     }
     
@@ -158,17 +178,18 @@ final class QuestionView: UIView {
 //MARK: Animation
 extension QuestionView: CAAnimationDelegate {
     
-    private func fadeOut() {
+    private func fadeOut(move: QuestionMove) {
         
         self.layer.removeAnimation(forKey: "fadeout-move")
         self.layer.removeAnimation(forKey: "fadeout-opacity")
         
         let moveAnimation = CABasicAnimation(keyPath: "position")
 
-        moveAnimation.byValue = NSValue(cgPoint: CGPoint(x: -100, y: 0))
+        moveAnimation.byValue = NSValue(cgPoint: CGPoint(x: move == .next ? -100 : 100, y: 0))
         moveAnimation.duration = 0.5
         
         let fadeAnimation = CABasicAnimation(keyPath: "opacity")
+        
         fadeAnimation.fromValue = 1.0
         fadeAnimation.toValue = 0.0
         fadeAnimation.duration = 0.5
@@ -181,7 +202,7 @@ extension QuestionView: CAAnimationDelegate {
         self.layer.add(fadeAnimation, forKey: "fadeout-opacity")
     }
     
-    private func fadeIn() {
+    private func fadeIn(move: QuestionMove) {
         
         self.layer.removeAnimation(forKey: "fadein-move")
         self.layer.removeAnimation(forKey: "fadein-opacity")
@@ -189,7 +210,9 @@ extension QuestionView: CAAnimationDelegate {
         let moveAnimation = CABasicAnimation(keyPath: "position")
         let center = center
         
-        moveAnimation.fromValue = NSValue(cgPoint: CGPoint(x: center.x + 100, y: center.y))
+        let fromX = move == .next ? center.x + 100 : center.x - 100
+        
+        moveAnimation.fromValue = NSValue(cgPoint: CGPoint(x: fromX, y: center.y))
         moveAnimation.toValue = NSValue(cgPoint: center)
         moveAnimation.duration = 0.5
         
@@ -205,12 +228,18 @@ extension QuestionView: CAAnimationDelegate {
     }
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        if let nextForm {
-            updateCurrentView(nextForm: nextForm)
+        if move == .next {
+            if let nextForm {
+                updateCurrentView(nextForm: nextForm)
+            } else {
+                updateCurrentView(nextForm: nil)
+            }
+            fadeIn(move: move)
         } else {
-            updateCurrentView(nextForm: nil)
+            fadeOut(move: move)
         }
-        fadeIn()
+        
+
     }
 }
 

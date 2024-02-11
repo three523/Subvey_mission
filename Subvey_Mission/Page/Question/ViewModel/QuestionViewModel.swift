@@ -11,7 +11,8 @@ final class QuestionViewModel {
     private let formManager: FormManager
     private let apiHandler: APIHandler
     
-    var formViewUpdateHandler: ((Form?) -> Void)?
+    var formViewNextUpdateHandler: ((Form?) -> Void)?
+    var formViewBackUpdateHandler: ((Form?, Any?) -> Void)?
     var subveyCompleteHandler: (() -> Void)?
     
     init(formManager: FormManager, apiHandler: APIHandler) {
@@ -21,7 +22,13 @@ final class QuestionViewModel {
     
     func fetchNextQuestion() {
         let nextForm = formManager.nextQuestion()
-        formViewUpdateHandler?(nextForm)
+        formViewNextUpdateHandler?(nextForm)
+    }
+    
+    func fetchBackQuestion() {
+        var (backForm, answer) = formManager.backQuestion()
+        guard let backForm else { return }
+        formViewBackUpdateHandler?(backForm, answer)
     }
     
     func updateAnswer(answer: [String: Any]?) {
@@ -30,7 +37,7 @@ final class QuestionViewModel {
     
     func nextQuestionTap() {
         let form = formManager.nextQuestion()
-        formViewUpdateHandler?(form)
+        formViewNextUpdateHandler?(form)
     }
     
     func getCurrentForm() -> Form? {
@@ -38,6 +45,11 @@ final class QuestionViewModel {
     }
     
     func submitAnswer() {
+        guard formManager.answers.isEmpty == false else {
+            //TODO: 작성을 안했을 경우 에러 메세지 처리
+            print("작성한 내용이 없습니다.")
+            return
+        }
         apiHandler.submitSubery(typeId: formManager.typeId, sendData: formManager.answers) { [weak self] result in
             switch result {
             case .success(let answer):
@@ -49,7 +61,7 @@ final class QuestionViewModel {
                             let forms = subvey.data.forms
                             self?.formManager.forms = forms
                             DispatchQueue.main.async {
-                                self?.formViewUpdateHandler?(forms.first)
+                                self?.formViewNextUpdateHandler?(forms.first)
                             }
                         case .failure(let failure):
                             print(failure.localizedDescription)

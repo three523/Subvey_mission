@@ -9,6 +9,14 @@ import UIKit
 import SnapKit
 
 class QuestionViewController: UIViewController {
+    
+    private lazy var backQuestionButton: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("이전 질문", for: .normal)
+        btn.setTitleColor(.black, for: .normal)
+        btn.addTarget(self, action: #selector(backQuestion), for: .touchUpInside)
+        return btn
+    }()
 
     let formManager: FormManager
     
@@ -30,18 +38,32 @@ class QuestionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(backQuestionButton)
         view.addSubview(questionView)
+        let safeArea = view.safeAreaLayoutGuide
+        backQuestionButton.snp.makeConstraints { make in
+            make.top.left.equalTo(safeArea).inset(16)
+        }
         questionView.snp.makeConstraints { make in
             make.center.equalTo(view.snp.center)
             make.left.right.equalToSuperview().inset(16)
         }
     }
     
+    @objc private func backQuestion() {
+        viewModel.fetchBackQuestion()
+    }
+    
     private func bind() {
-        viewModel.formViewUpdateHandler = { [weak self] form in
+        viewModel.formViewNextUpdateHandler = { [weak self] form in
             DispatchQueue.main.async {
                 let answer = self?.questionView.next(nextForm: form)
                 self?.viewModel.updateAnswer(answer: answer)
+            }
+        }
+        viewModel.formViewBackUpdateHandler = { [weak self] form, answer in
+            DispatchQueue.main.async {
+                self?.questionView.back(prevForm: form, answer: answer)
             }
         }
         viewModel.subveyCompleteHandler = { [weak self] in
@@ -52,6 +74,10 @@ class QuestionViewController: UIViewController {
         
         questionView.onNextButtonTap = { [weak self] in
             self?.viewModel.fetchNextQuestion()
+        }
+        
+        questionView.onBackButtonTap = { [weak self] in
+            self?.viewModel.fetchBackQuestion()
         }
         
         questionView.subveyCompleteHandler = { [weak self] in
