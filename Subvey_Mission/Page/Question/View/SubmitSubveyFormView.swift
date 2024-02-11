@@ -10,6 +10,7 @@ import UIKit
 final class SubmitSubveyFormView: UIStackView, FormRenderable {
     var type: FormType
     var form: Form
+    var answer: Any?
     
     private let questionLabel: UILabel = {
         let label = UILabel()
@@ -18,7 +19,7 @@ final class SubmitSubveyFormView: UIStackView, FormRenderable {
         return label
     }()
 
-    init(form: Form, frame: CGRect = .zero) {
+    init(form: Form, frame: CGRect = .zero, answer: Any? = nil) {
         self.type = form.type
         self.form = form
         super.init(frame: frame)
@@ -29,7 +30,7 @@ final class SubmitSubveyFormView: UIStackView, FormRenderable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func next(nextForm: Form){}
+    func next(nextForm: Form, answer: Any? = nil) {}
     
     func getAnswer() -> [String : Any]? {
         return nil

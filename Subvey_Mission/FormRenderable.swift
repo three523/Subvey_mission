@@ -11,6 +11,7 @@ import Foundation
 protocol FormRenderable {
     var type: FormType { get }
     var form: Form { get }
-    func next(nextForm: Form)
+    var answer: Any? { get }
+    func next(nextForm: Form, answer: Any?)
     func getAnswer() -> [String: Any]?
 }

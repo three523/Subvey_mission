@@ -11,6 +11,7 @@ final class FormManager {
     var forms: [Form] {
         didSet {
             currentIndex = forms.isEmpty ? nil : 0
+            answers = [:]
         }
     }
     var typeId: String = "common"
@@ -20,6 +21,7 @@ final class FormManager {
             progress = currentIndex + 1
         }
     }
+    var prevIndex: Int?
     var answers: [String: Any] = [:]
     
     var progress: Int = 0
@@ -51,11 +53,24 @@ final class FormManager {
     
     func nextQuestion() -> Form? {
         guard let currentIndex, currentIndex + 1 < forms.count else {
+            self.prevIndex = currentIndex
             self.currentIndex = nil
             return nil
         }
+        self.prevIndex = currentIndex
         let nextIndex = currentIndex + 1
         self.currentIndex = nextIndex
         return forms[nextIndex]
+    }
+    
+    func backQuestion() -> (Form?, Any?) {
+        guard let prevIndex, prevIndex < forms.count else {
+            return (nil, nil)
+        }
+        self.currentIndex = prevIndex
+        self.prevIndex = prevIndex > 0 ? prevIndex - 1 : nil
+        let prevForm = forms[prevIndex]
+        let answer = answers[prevForm.name]
+        return (forms[prevIndex], answer)
     }
 }

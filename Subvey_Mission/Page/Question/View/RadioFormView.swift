@@ -11,6 +11,7 @@ class RadioFormView: UIStackView, FormRenderable {
 
     var form: Form
     var type: FormType = .radio
+    var answer: Any?
     
     private let questionLabel: UILabel = {
         let label = UILabel()
@@ -20,9 +21,10 @@ class RadioFormView: UIStackView, FormRenderable {
     }()
     private var radioViews: [RadioView] = []
 
-    init(form: Form) {
+    init(form: Form, answer: Any? = nil) {
         self.type = .text
         self.form = form
+        self.answer = answer
         super.init(frame: .zero)
         setup()
     }
@@ -31,8 +33,9 @@ class RadioFormView: UIStackView, FormRenderable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func next(nextForm: Form) {
+    func next(nextForm: Form, answer: Any? = nil) {
         questionLabel.text = form.question
+        self.form = nextForm
         switch nextForm.placeholder {
         case .dictionary(let options):
             updateRadioViews(options: options)
@@ -95,6 +98,14 @@ class RadioFormView: UIStackView, FormRenderable {
             }
         }
     }
+    
+    private func setCheckedRadioViews() {
+        if let answer = answer as? [String: Any] {
+            answer.forEach { (key, value) in
+                
+            }
+        }
+    }
 }
 
 //MARK: Setup
@@ -102,6 +113,7 @@ private extension RadioFormView {
     func setup() {
         setupInit()
         setupSubViews()
+        setupForm()
     }
     
     func setupInit() {
@@ -117,6 +129,9 @@ private extension RadioFormView {
         switch form.placeholder {
         case .dictionary(let options):
             updateRadioViews(options: options)
+            if let answer {
+                setCheckedRadioViews()
+            }
         default: break
         }
     }
