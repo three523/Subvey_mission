@@ -29,6 +29,7 @@ class QuestionViewController: UIViewController {
         self.questionView = QuestionView(form: viewModel.getCurrentForm()!)
         super.init(nibName: nil, bundle: nil)
         
+        backButtonUpdate()
         bind()
     }
     
@@ -52,6 +53,7 @@ class QuestionViewController: UIViewController {
     
     @objc private func backQuestion() {
         viewModel.fetchBackQuestion()
+        backButtonUpdate()
     }
     
     private func bind() {
@@ -59,6 +61,7 @@ class QuestionViewController: UIViewController {
             DispatchQueue.main.async {
                 let answer = self?.questionView.next(nextForm: form)
                 self?.viewModel.updateAnswer(answer: answer)
+                self?.backButtonUpdate()
             }
         }
         viewModel.formViewBackUpdateHandler = { [weak self] form, answer in
@@ -74,15 +77,22 @@ class QuestionViewController: UIViewController {
         
         questionView.onNextButtonTap = { [weak self] in
             self?.viewModel.fetchNextQuestion()
+            self?.backButtonUpdate()
         }
         
         questionView.onBackButtonTap = { [weak self] in
             self?.viewModel.fetchBackQuestion()
+            self?.backButtonUpdate()
         }
         
         questionView.subveyCompleteHandler = { [weak self] in
             self?.viewModel.submitAnswer()
+            self?.backButtonUpdate()
         }
+    }
+    
+    func backButtonUpdate() {
+        backQuestionButton.isHidden = !formManager.isExitsBackQuestion()
     }
 
 }

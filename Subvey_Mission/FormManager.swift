@@ -11,6 +11,7 @@ final class FormManager {
     var forms: [Form] {
         didSet {
             currentIndex = forms.isEmpty ? nil : 0
+            prevIndex = nil
             answers = [:]
         }
     }
@@ -72,5 +73,9 @@ final class FormManager {
         let prevForm = forms[prevIndex]
         let answer = answers[prevForm.name]
         return (forms[prevIndex], answer)
+    }
+    
+    func isExitsBackQuestion() -> Bool {
+        return prevIndex != nil
     }
 }
