@@ -15,6 +15,14 @@
 		18B793A42B73828D00BBD62C /* RadioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B793A32B73828D00BBD62C /* RadioView.swift */; };
 		18B793A62B739B0400BBD62C /* RadioWithInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B793A52B739B0400BBD62C /* RadioWithInputView.swift */; };
 		18B793A82B73A07A00BBD62C /* RadioFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B793A72B73A07A00BBD62C /* RadioFormView.swift */; };
+		18B91B342B876D2D00976F9E /* RequiredFieldValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B91B222B876D2D00976F9E /* RequiredFieldValidation.swift */; };
+		18B91B362B876D2D00976F9E /* MaxLengthValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B91B242B876D2D00976F9E /* MaxLengthValidation.swift */; };
+		18B91B382B876D2D00976F9E /* Validatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B91B262B876D2D00976F9E /* Validatable.swift */; };
+		18B91B392B876D2D00976F9E /* ConfirmValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B91B272B876D2D00976F9E /* ConfirmValidation.swift */; };
+		18B91B3A2B876D2D00976F9E /* CustomValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B91B282B876D2D00976F9E /* CustomValidation.swift */; };
+		18B91B482B876E7700976F9E /* CustomValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B91B3E2B876E7700976F9E /* CustomValidator.swift */; };
+		18B91B492B876E7700976F9E /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B91B3F2B876E7700976F9E /* Validator.swift */; };
+		18B91B512B876FD100976F9E /* FormValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B91B502B876FD100976F9E /* FormValidator.swift */; };
 		18B94DAB2B6CBA3A00EEDCF6 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B94DAA2B6CBA3A00EEDCF6 /* QuestionViewController.swift */; };
 		18B9F91B2B76B2A300D67073 /* FormManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B9F91A2B76B2A300D67073 /* FormManager.swift */; };
 		18B9F91D2B76B7EB00D67073 /* FormCheckable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B9F91C2B76B7EB00D67073 /* FormCheckable.swift */; };
@@ -24,6 +32,9 @@
 		18C84A192B74F27900143095 /* NumberFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C84A182B74F27900143095 /* NumberFormView.swift */; };
 		18C84A1C2B75027500143095 /* Subvey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C84A1B2B75027500143095 /* Subvey.swift */; };
 		18C84A1E2B75028E00143095 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C84A1D2B75028E00143095 /* Answer.swift */; };
+		18C8A1CE2B88486C0065E8A1 /* NotEqualValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C8A1CD2B88486B0065E8A1 /* NotEqualValidation.swift */; };
+		18C8A1D02B8857480065E8A1 /* MinLengthValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C8A1CF2B8857480065E8A1 /* MinLengthValidation.swift */; };
+		18C8A1D22B8880E10065E8A1 /* ValidateError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C8A1D12B8880E10065E8A1 /* ValidateError.swift */; };
 		18D327F52B721EAA0095823E /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D327F42B721EAA0095823E /* QuestionView.swift */; };
 		18D56EFE2B69234400B19F24 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D56EFD2B69234400B19F24 /* AppDelegate.swift */; };
 		18D56F002B69234400B19F24 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D56EFF2B69234400B19F24 /* SceneDelegate.swift */; };
@@ -40,6 +51,14 @@
 		18B793A32B73828D00BBD62C /* RadioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioView.swift; sourceTree = "<group>"; };
 		18B793A52B739B0400BBD62C /* RadioWithInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioWithInputView.swift; sourceTree = "<group>"; };
 		18B793A72B73A07A00BBD62C /* RadioFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioFormView.swift; sourceTree = "<group>"; };
+		18B91B222B876D2D00976F9E /* RequiredFieldValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequiredFieldValidation.swift; sourceTree = "<group>"; };
+		18B91B242B876D2D00976F9E /* MaxLengthValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaxLengthValidation.swift; sourceTree = "<group>"; };
+		18B91B262B876D2D00976F9E /* Validatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validatable.swift; sourceTree = "<group>"; };
+		18B91B272B876D2D00976F9E /* ConfirmValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmValidation.swift; sourceTree = "<group>"; };
+		18B91B282B876D2D00976F9E /* CustomValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomValidation.swift; sourceTree = "<group>"; };
+		18B91B3E2B876E7700976F9E /* CustomValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomValidator.swift; sourceTree = "<group>"; };
+		18B91B3F2B876E7700976F9E /* Validator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
+		18B91B502B876FD100976F9E /* FormValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidator.swift; sourceTree = "<group>"; };
 		18B94DAA2B6CBA3A00EEDCF6 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		18B9F91A2B76B2A300D67073 /* FormManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormManager.swift; sourceTree = "<group>"; };
 		18B9F91C2B76B7EB00D67073 /* FormCheckable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormCheckable.swift; sourceTree = "<group>"; };
@@ -49,6 +68,9 @@
 		18C84A182B74F27900143095 /* NumberFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormView.swift; sourceTree = "<group>"; };
 		18C84A1B2B75027500143095 /* Subvey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subvey.swift; sourceTree = "<group>"; };
 		18C84A1D2B75028E00143095 /* Answer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
+		18C8A1CD2B88486B0065E8A1 /* NotEqualValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotEqualValidation.swift; sourceTree = "<group>"; };
+		18C8A1CF2B8857480065E8A1 /* MinLengthValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinLengthValidation.swift; sourceTree = "<group>"; };
+		18C8A1D12B8880E10065E8A1 /* ValidateError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateError.swift; sourceTree = "<group>"; };
 		18D327F42B721EAA0095823E /* QuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionView.swift; sourceTree = "<group>"; };
 		18D56EFA2B69234400B19F24 /* Subvey_Mission.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Subvey_Mission.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18D56EFD2B69234400B19F24 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +93,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		18B91B0E2B87568800976F9E /* Validate */ = {
+			isa = PBXGroup;
+			children = (
+				18B91B3B2B876E7700976F9E /* Validators */,
+				18B91B212B876D2D00976F9E /* Validations */,
+				18C8A1D12B8880E10065E8A1 /* ValidateError.swift */,
+			);
+			path = Validate;
+			sourceTree = "<group>";
+		};
+		18B91B212B876D2D00976F9E /* Validations */ = {
+			isa = PBXGroup;
+			children = (
+				18B91B222B876D2D00976F9E /* RequiredFieldValidation.swift */,
+				18C8A1CD2B88486B0065E8A1 /* NotEqualValidation.swift */,
+				18B91B262B876D2D00976F9E /* Validatable.swift */,
+				18B91B272B876D2D00976F9E /* ConfirmValidation.swift */,
+				18B91B282B876D2D00976F9E /* CustomValidation.swift */,
+				18B91B242B876D2D00976F9E /* MaxLengthValidation.swift */,
+				18C8A1CF2B8857480065E8A1 /* MinLengthValidation.swift */,
+			);
+			path = Validations;
+			sourceTree = "<group>";
+		};
+		18B91B3B2B876E7700976F9E /* Validators */ = {
+			isa = PBXGroup;
+			children = (
+				18B91B3E2B876E7700976F9E /* CustomValidator.swift */,
+				18B91B3F2B876E7700976F9E /* Validator.swift */,
+				18B91B502B876FD100976F9E /* FormValidator.swift */,
+			);
+			path = Validators;
+			sourceTree = "<group>";
+		};
 		18C84A1A2B75026800143095 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +215,7 @@
 		18D56EFC2B69234400B19F24 /* Subvey_Mission */ = {
 			isa = PBXGroup;
 			children = (
+				18B91B0E2B87568800976F9E /* Validate */,
 				18C84A242B75035000143095 /* Network */,
 				18C84A1F2B7502B600143095 /* Page */,
 				18C84A1A2B75026800143095 /* Entity */,
@@ -249,23 +306,34 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18B91B512B876FD100976F9E /* FormValidator.swift in Sources */,
+				18C8A1D02B8857480065E8A1 /* MinLengthValidation.swift in Sources */,
 				18B793A62B739B0400BBD62C /* RadioWithInputView.swift in Sources */,
 				18B9F91F2B76C84500D67073 /* RadioNumberFomrView.swift in Sources */,
 				18B9F91B2B76B2A300D67073 /* FormManager.swift in Sources */,
 				18B94DAB2B6CBA3A00EEDCF6 /* QuestionViewController.swift in Sources */,
+				18B91B382B876D2D00976F9E /* Validatable.swift in Sources */,
+				18B91B3A2B876D2D00976F9E /* CustomValidation.swift in Sources */,
 				18B7939E2B736E2B00BBD62C /* TextFormView.swift in Sources */,
 				18B7939C2B73626100BBD62C /* FormRenderable.swift in Sources */,
+				18B91B362B876D2D00976F9E /* MaxLengthValidation.swift in Sources */,
 				18B9F9212B76D5B700D67073 /* SubmitSubveyFormView.swift in Sources */,
+				18C8A1D22B8880E10065E8A1 /* ValidateError.swift in Sources */,
+				18C8A1CE2B88486C0065E8A1 /* NotEqualValidation.swift in Sources */,
 				18C84A1C2B75027500143095 /* Subvey.swift in Sources */,
 				18B793A82B73A07A00BBD62C /* RadioFormView.swift in Sources */,
 				18D327F52B721EAA0095823E /* QuestionView.swift in Sources */,
+				18B91B492B876E7700976F9E /* Validator.swift in Sources */,
 				18C84A1E2B75028E00143095 /* Answer.swift in Sources */,
+				18B91B482B876E7700976F9E /* CustomValidator.swift in Sources */,
 				18D56F022B69234400B19F24 /* ViewController.swift in Sources */,
 				18B793A42B73828D00BBD62C /* RadioView.swift in Sources */,
 				18B6EB5C2B6A5B6000F62458 /* APIHandler.swift in Sources */,
 				18B9F91D2B76B7EB00D67073 /* FormCheckable.swift in Sources */,
 				18C84A192B74F27900143095 /* NumberFormView.swift in Sources */,
 				18D56EFE2B69234400B19F24 /* AppDelegate.swift in Sources */,
+				18B91B342B876D2D00976F9E /* RequiredFieldValidation.swift in Sources */,
+				18B91B392B876D2D00976F9E /* ConfirmValidation.swift in Sources */,
 				18C84A172B74C56E00143095 /* QuestionViewModel.swift in Sources */,
 				18B793A02B737EA500BBD62C /* RadioWithInputFormView.swift in Sources */,
 				18D56F002B69234400B19F24 /* SceneDelegate.swift in Sources */,

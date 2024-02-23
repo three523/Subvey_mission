@@ -14,4 +14,6 @@ protocol FormRenderable {
     var answer: Any? { get }
     func next(nextForm: Form, answer: Any?)
     func getAnswer() -> [String: Any]?
+    func validate() -> ValidateError?
+    func createValidator() -> Void
 }

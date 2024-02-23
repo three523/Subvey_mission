@@ -66,6 +66,14 @@ final class TextFormView: UIStackView, FormRenderable {
         return [name: answer]
     }
     
+    func validate() -> ValidateError? {
+        return nil
+    }
+    
+    func createValidator() {
+        
+    }
+    
     private func resetTextField() {
         answerTextField.text = ""
         answerTextField.resignFirstResponder()
