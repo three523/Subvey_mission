@@ -35,6 +35,14 @@ final class SubmitSubveyFormView: UIStackView, FormRenderable {
     func getAnswer() -> [String : Any]? {
         return nil
     }
+    
+    func validate() -> ValidateError? {
+        return nil
+    }
+    
+    func createValidator() {
+        
+    }
 }
 
 private extension SubmitSubveyFormView {

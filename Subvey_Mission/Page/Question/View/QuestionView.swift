@@ -66,10 +66,14 @@ final class QuestionView: UIView {
     }
     
     @objc private func nextQuestion() {
-        if currentView is SubmitSubveyFormView {
-            subveyCompleteHandler?()
+        if let error = currentView?.validate() {
+            print(error)
         } else {
-            onNextButtonTap?()
+            if currentView is SubmitSubveyFormView {
+                subveyCompleteHandler?()
+            } else {
+                onNextButtonTap?()
+            }
         }
     }
     
@@ -112,6 +116,7 @@ final class QuestionView: UIView {
             let newView = createView(nextForm: nextForm, answer: answer)
             replaceCurrentView(formView: newView)
         }
+        currentView?.createValidator()
     }
     
     func shouldReuseView(form: Form) -> Bool {

@@ -108,6 +108,14 @@ class RadioWithInputFormView: UIStackView, FormRenderable {
         return [name: value]
     }
     
+    func validate() -> ValidateError? {
+        return nil
+    }
+    
+    func createValidator() {
+        
+    }
+    
     private func createRadioUpdateHandler() -> ((String) -> Void)? {
         return { [weak self] value in
             self?.radioViews.forEach { radioView in
