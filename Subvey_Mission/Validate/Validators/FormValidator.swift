@@ -33,7 +33,7 @@ final class FormValidator<InputType> {
 
 
 struct AnyValidation<InputType> {
-    let error: ValidateError
+    let error: ValidateError?
     
     private let baseValidateInput: (InputType) -> ValidateError?
     

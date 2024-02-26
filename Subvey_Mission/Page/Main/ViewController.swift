@@ -18,7 +18,7 @@ class ViewController: UIViewController {
             switch result {
             case .success(let subvey):
                 let formManager = FormManager(forms: subvey.data.forms)
-                let viewModel = QuestionViewModel(formManager: formManager, apiHandler: APIHandler())
+                let viewModel = QuestionViewModel(formManager: formManager, apiHandler: APIHandler(), escapeValidates: subvey.data.escapeValidate)
                 
                 DispatchQueue.main.async {
                     self.navigationController?.pushViewController(QuestionViewController(formManager: formManager, viewModel: viewModel), animated: true)

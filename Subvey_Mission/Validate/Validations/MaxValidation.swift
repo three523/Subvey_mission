@@ -7,13 +7,13 @@
 
 import Foundation
 
-final class MaxLengthValidation: Validatable {
+final class MaxValidation: Validatable {
         
     private let fieldName: String
     private let maxLength: Int
-    var error: ValidateError
+    var error: ValidateError?
     
-    init(fieldName: String, maxLength: Int, error: ValidateError) {
+    init(fieldName: String, maxLength: Int, error: ValidateError? = ValidateError(message: "조건에 맞지 않습니다.")) {
         self.fieldName = fieldName
         self.maxLength = maxLength
         self.error = error
@@ -21,7 +21,7 @@ final class MaxLengthValidation: Validatable {
     
     func validate(data: [String: Any]?) -> ValidateError? {
         guard let count = data?[fieldName] as? Int,
-              count < maxLength  else { return error }
+              count <= maxLength  else { return error }
         return nil
     }
     

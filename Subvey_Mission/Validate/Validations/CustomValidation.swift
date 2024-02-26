@@ -11,9 +11,9 @@ final class CustomValidation: Validatable {
         
     private let fieldName: String
     private let customValidator: Validator
-    var error: ValidateError
+    var error: ValidateError?
     
-    init(fieldName: String, pattern: String, error: ValidateError) {
+    init(fieldName: String, pattern: String, error: ValidateError? = ValidateError(message: "조건에 맞지 않습니다.")) {
         self.fieldName = fieldName
         self.customValidator = CustomValidator(pattern: pattern)
         self.error = error
