@@ -10,6 +10,7 @@ import UIKit
 final class NumberFormView: UIStackView, FormRenderable {
     var type: FormType
     var form: Form
+    var validator: FormValidator<Int>? = nil
     var answer: Any?
     
     private let questionLabel: UILabel = {
@@ -70,7 +71,53 @@ final class NumberFormView: UIStackView, FormRenderable {
     }
     
     func createValidator() {
-        
+        let formValidator = FormValidator<Int>()
+        form.validate.forEach { validate in
+            let error = ValidateError(message: validate.validateText)
+            if validate.type == "not" {
+                switch validate.target {
+                case .int(let compareValue):
+                    let notEqualValidate = NotEqualValidation(fieldName: form.name, compareValue: compareValue, error: error)
+                    formValidator.add(validate: notEqualValidate)
+                default:
+                    print("잘못된 ValidateTarget 입니다.\(validate.target)")
+                    break
+                }
+            } else if validate.type == "minMaxLength" {
+                switch validate.target {
+                case .minMax(let minMax):
+                    if let minValue = minMax.first {
+                        switch minValue {
+                        case .int(let min):
+                            let minValidate = MinValidation(fieldName: form.name, minLength: min, error: error)
+                            formValidator.add(validate: minValidate)
+                        case .string(_): break
+                        }
+                    }
+                    if let maxValue = minMax.last {
+                        switch maxValue {
+                        case .int(let max):
+                            let maxValidation = MaxValidation(fieldName: form.name, maxLength: max, error: error)
+                            formValidator.add(validate: maxValidation)
+                        case .string(_): break
+                        }
+                    }
+                default:
+                    print("잘못된 ValidateTarget 입니다.\(validate.target)")
+                    break
+                }
+            } else if validate.type == "sameAS" {
+                switch validate.target {
+                case .int(let eqaulValue):
+                    let equalValidate = ConfirmValidation(fieldName: form.name, compareValue: eqaulValue, error: error)
+                    formValidator.add(validate: equalValidate)
+                default:
+                    print("잘못된 ValidateTarget 입니다.\(validate.target)")
+                    break
+                }
+            }
+        }
+        self.validator = formValidator
     }
     
     private func resetTextField() {

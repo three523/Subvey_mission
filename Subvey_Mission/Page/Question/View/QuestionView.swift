@@ -32,6 +32,8 @@ final class QuestionView: UIView {
         return btn
     }()
     
+    private var isAnimating: Bool = false
+    
     var onNextButtonTap: (() -> Void)?
     var onBackButtonTap: (() -> Void)?
     var subveyCompleteHandler: (() -> Void)?
@@ -53,7 +55,14 @@ final class QuestionView: UIView {
     
     typealias FormView = (UIView & FormRenderable)
     
-    var currentView: FormView? = nil
+    var currentView: FormView? = nil {
+        didSet {
+            if let currentView = currentView,
+               !(currentView is SubmitSubveyFormView) {
+                currentView.createValidator()
+            }
+        }
+    }
     var nextForm: Form? = nil
     
     init(form: Form, frame: CGRect = .zero) {
@@ -66,6 +75,8 @@ final class QuestionView: UIView {
     }
     
     @objc private func nextQuestion() {
+        if isAnimating { return }
+        
         if let error = currentView?.validate() {
             print(error)
         } else {
@@ -78,6 +89,7 @@ final class QuestionView: UIView {
     }
     
     @objc private func backQuestion() {
+        if isAnimating { return }
         onBackButtonTap?()
     }
     
@@ -185,6 +197,8 @@ extension QuestionView: CAAnimationDelegate {
     
     private func fadeOut(move: QuestionMove) {
         
+        isAnimating = true
+        
         self.layer.removeAnimation(forKey: "fadeout-move")
         self.layer.removeAnimation(forKey: "fadeout-opacity")
         
@@ -193,12 +207,13 @@ extension QuestionView: CAAnimationDelegate {
         moveAnimation.byValue = NSValue(cgPoint: CGPoint(x: move == .next ? -100 : 100, y: 0))
         moveAnimation.duration = 0.5
         
-        let fadeAnimation = CABasicAnimation(keyPath: "opacity")
+        let fadeAnimation = CABasicAnimation(keyPath: "fadeout-opacity")
         
         fadeAnimation.fromValue = 1.0
         fadeAnimation.toValue = 0.0
         fadeAnimation.duration = 0.5
         
+        fadeAnimation.setValue("fadeout", forKey: "name")
         fadeAnimation.fillMode = .forwards
         fadeAnimation.isRemovedOnCompletion = false
         fadeAnimation.delegate = self
@@ -208,6 +223,8 @@ extension QuestionView: CAAnimationDelegate {
     }
     
     private func fadeIn(move: QuestionMove) {
+        
+        isAnimating = true
         
         self.layer.removeAnimation(forKey: "fadein-move")
         self.layer.removeAnimation(forKey: "fadein-opacity")
@@ -221,30 +238,33 @@ extension QuestionView: CAAnimationDelegate {
         moveAnimation.toValue = NSValue(cgPoint: center)
         moveAnimation.duration = 0.5
         
-        let fadeAnimation = CABasicAnimation(keyPath: "opacity")
+        let fadeAnimation = CABasicAnimation(keyPath: "fadein-opacity")
         fadeAnimation.toValue = 1.0
         fadeAnimation.duration = 0.5
         
+        fadeAnimation.setValue("fadein", forKey: "name")
         fadeAnimation.fillMode = .forwards
         fadeAnimation.isRemovedOnCompletion = false
+        fadeAnimation.delegate = self
         
         self.layer.add(moveAnimation, forKey: "fadein-move")
         self.layer.add(fadeAnimation, forKey: "fadein-opacity")
     }
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        if move == .next {
+        if let name = anim.value(forKey: "name") as? String,
+           name == "fadein" {
+            isAnimating = false
+        } else if move == .next,
+           let name = anim.value(forKey: "name") as? String,
+           name == "fadeout" {
             if let nextForm {
                 updateCurrentView(nextForm: nextForm)
             } else {
                 updateCurrentView(nextForm: nil)
             }
             fadeIn(move: move)
-        } else {
-            fadeOut(move: move)
         }
-        
-
     }
 }
 

@@ -9,6 +9,6 @@ import Foundation
 
 protocol Validatable {
     associatedtype InputType
-    var error: ValidateError { get set }
+    var error: ValidateError? { get set }
     func validate(value: InputType) -> ValidateError?
 }

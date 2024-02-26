@@ -11,9 +11,9 @@ final class NotEqualValidation<T: Equatable>: Validatable {
     
     private let fieldName: String
     private let compareValue: T
-    var error: ValidateError
+    var error: ValidateError?
     
-    init(fieldName: String, compareValue: T, error: ValidateError) {
+    init(fieldName: String, compareValue: T, error: ValidateError? = ValidateError(message: "조건에 맞지 않습니다.")) {
         self.fieldName = fieldName
         self.compareValue = compareValue
         self.error = error
@@ -26,7 +26,7 @@ final class NotEqualValidation<T: Equatable>: Validatable {
     }
     
     func validate(value: T) -> ValidateError? {
-        return value != compareValue ? nil : error
+        return value == compareValue ? error : nil
     }
     
 }

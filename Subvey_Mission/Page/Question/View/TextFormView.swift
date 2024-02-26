@@ -23,8 +23,11 @@ final class TextFormView: UIStackView, FormRenderable {
         textField.font = .systemFont(ofSize: 16, weight: .regular)
         textField.textColor = .black
         textField.borderStyle = .roundedRect
+        textField.text = ""
         return textField
     }()
+    
+    var validator: FormValidator<String>? = nil
 
     init(form: Form, answer: Any? = nil) {
         self.type = .text
@@ -67,11 +70,69 @@ final class TextFormView: UIStackView, FormRenderable {
     }
     
     func validate() -> ValidateError? {
-        return nil
+        return validator?.validate(input: answerTextField.text ?? "")
     }
     
     func createValidator() {
-        
+        let formValidator = FormValidator<String>()
+        form.validate.forEach { validate in
+            let error = ValidateError(message: validate.validateText)
+            if validate.type == "not" {
+                switch validate.target {
+                case .string(let compareValue):
+                    let notEqualValidate = NotEqualValidation(fieldName: form.name, compareValue: compareValue, error: error)
+                    formValidator.add(validate: notEqualValidate)
+                default:
+                    print("잘못된 ValidateTarget 입니다.\(validate.target)")
+                    break
+                }
+            } else if validate.type == "minMaxLength" {
+                var minLength = 0
+                var maxLength = 0
+                
+                switch validate.target {
+                case .minMax(let minMax):
+                    if let minValue = minMax.first {
+                        switch minValue {
+                        case .int(let min):
+                            minLength = min
+                        case .string(_): break
+                        }
+                    }
+                    if let maxValue = minMax.last {
+                        switch maxValue {
+                        case .int(let max):
+                              maxLength = max
+                        case .string(_): break
+                        }
+                    }
+                default:
+                    print("잘못된 ValidateTarget 입니다.\(validate.target)")
+                    break
+                }
+                let minMaxLengthValidate = MinMaxLengthValidation(fieldName: form.name, minLength: minLength, maxLength: maxLength, error: error)
+                formValidator.add(validate: minMaxLengthValidate)
+            } else if validate.type == "sameAS" {
+                switch validate.target {
+                case .string(let eqaulValue):
+                    let equalValidate = ConfirmValidation(fieldName: form.name, compareValue: eqaulValue, error: error)
+                    formValidator.add(validate: equalValidate)
+                default:
+                    print("잘못된 ValidateTarget 입니다.\(validate.target)")
+                    break
+                }
+            } else if validate.type == "pattern" {
+                switch validate.target {
+                case .string(let pattern):
+                    let patternValidate = CustomValidation(fieldName: form.name, pattern: pattern, error: error)
+                    formValidator.add(validate: patternValidate)
+                default:
+                    print("잘못된 ValidateTarget 입니다.\(validate.target)")
+                    break
+                }
+            }
+        }
+        self.validator = formValidator
     }
     
     private func resetTextField() {

@@ -8,8 +8,9 @@
 import Foundation
 
 final class RequiredFieldValidation<InputType>: Validatable {
+    
     private let fieldName: String
-    var error: ValidateError
+    var error: ValidateError?
     
     init(fieldName: String, error: ValidateError) {
         self.fieldName = fieldName

@@ -106,7 +106,7 @@ final class RadioNumberFormView: UIStackView, FormRenderable {
                     if let minValue = minMax.first {
                         switch minValue {
                         case .int(let min):
-                            let minValidate = MinLengthValidation(fieldName: form.name, minLength: min, error: error)
+                            let minValidate = MinValidation(fieldName: form.name, minLength: min, error: error)
                             formValidator.add(validate: minValidate)
                         case .string(_): break
                         }
@@ -114,7 +114,7 @@ final class RadioNumberFormView: UIStackView, FormRenderable {
                     if let maxValue = minMax.last {
                         switch maxValue {
                         case .int(let max):
-                            let maxValidate = MaxLengthValidation(fieldName: form.name, maxLength: max, error: error)
+                            let maxValidate = MaxValidation(fieldName: form.name, maxLength: max, error: error)
                             formValidator.add(validate: maxValidate)
                         case .string(_): break
                         }

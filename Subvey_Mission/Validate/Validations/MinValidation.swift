@@ -7,13 +7,13 @@
 
 import Foundation
 
-final class MinLengthValidation: Validatable {
+final class MinValidation: Validatable {
         
     private let fieldName: String
     private let minLength: Int
-    var error: ValidateError
+    var error: ValidateError?
     
-    init(fieldName: String, minLength: Int, error: ValidateError) {
+    init(fieldName: String, minLength: Int, error: ValidateError? = ValidateError(message: "조건에 맞지 않습니다.")) {
         self.fieldName = fieldName
         self.minLength = minLength
         self.error = error
@@ -21,7 +21,7 @@ final class MinLengthValidation: Validatable {
     
     func validate(data: [String: Any]?) -> ValidateError? {
         guard let count = data?[fieldName] as? Int,
-              count < minLength  else { return error }
+              count >= minLength  else { return error }
         return nil
     }
     
