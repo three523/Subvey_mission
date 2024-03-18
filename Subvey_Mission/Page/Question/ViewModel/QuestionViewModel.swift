@@ -7,13 +7,14 @@
 
 import Foundation
 
-final class QuestionViewModel {
+final class QuestionViewModel {    
     private let formManager: FormManager
     private let apiHandler: APIHandler
     private var escapeValidates: [EscapeValidate]
     
     var formViewNextUpdateHandler: ((Form?) -> Void)?
     var formViewBackUpdateHandler: ((Form?, Any?) -> Void)?
+    var formViewProgressUpdateHandler: ((CGFloat?) -> Void)?
     var subveyCompleteHandler: (() -> Void)?
     
     init(formManager: FormManager, apiHandler: APIHandler, escapeValidates: [EscapeValidate]) {
@@ -24,12 +25,14 @@ final class QuestionViewModel {
     
     func fetchNextQuestion() {
         let nextForm = formManager.nextQuestion()
+        formViewProgressUpdateHandler?(formManager.getProgress())
         formViewNextUpdateHandler?(nextForm)
     }
     
     func fetchBackQuestion() {
         let (backForm, answer) = formManager.backQuestion()
         guard let backForm else { return }
+        formViewProgressUpdateHandler?(formManager.getProgress())
         formViewBackUpdateHandler?(backForm, answer)
     }
     
@@ -44,6 +47,10 @@ final class QuestionViewModel {
     
     func getCurrentForm() -> Form? {
         return formManager.getCurrentForm()
+    }
+    
+    func getProgress() -> CGFloat {
+        return formManager.progress ?? 0.0
     }
     
     func submitAnswer() {

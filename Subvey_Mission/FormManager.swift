@@ -18,18 +18,22 @@ final class FormManager {
     var typeId: String = "common"
     var currentIndex: Int? {
         didSet {
-            guard let currentIndex else { return }
-            progress = currentIndex + 1
+            guard let currentIndex else {
+                progress = nil
+                return
+            }
+            progress = CGFloat(currentIndex + 1) / CGFloat(forms.count)
         }
     }
     var prevIndex: Int?
     var answers: [String: Any] = [:]
     
-    var progress: Int = 0
+    var progress: CGFloat?
     
     init(forms: [Form]) {
         self.forms = forms
         currentIndex = forms.isEmpty ? nil : 0
+        progress = forms.isEmpty ? nil : (1.0 / CGFloat(forms.count))
     }
     
     func getCurrentForm() -> Form? {
@@ -77,5 +81,9 @@ final class FormManager {
     
     func isExitsBackQuestion() -> Bool {
         return prevIndex != nil
+    }
+    
+    func getProgress() -> CGFloat? {
+        return progress
     }
 }

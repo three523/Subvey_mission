@@ -15,6 +15,20 @@ final class QuestionView: UIView {
         case back
     }
     
+    private let progressBar: UIView = {
+        let view: UIView = UIView()
+        view.layer.cornerRadius = 6
+        return view
+    }()
+    
+//    private var progressFillLayer: CGLayer?
+    private var progressFillView: UIView = {
+        let view: UIView = UIView()
+        view.layer.cornerRadius = 6
+        view.backgroundColor = .blue
+        return view
+    }()
+    
     private let stackView: UIStackView = {
         let stackView: UIStackView = UIStackView()
         stackView.axis = .vertical
