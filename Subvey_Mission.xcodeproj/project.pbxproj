@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		18AEA98A2BAAC82300A952C8 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AEA9892BAAC82300A952C8 /* Data.swift */; };
 		18B62F8B2B6BBCB600DE67B0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 18B62F8A2B6BBCB600DE67B0 /* SnapKit */; };
 		18B6EB5C2B6A5B6000F62458 /* APIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EB5B2B6A5B6000F62458 /* APIHandler.swift */; };
 		18B7939C2B73626100BBD62C /* FormRenderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B7939B2B73626100BBD62C /* FormRenderable.swift */; };
@@ -29,6 +30,7 @@
 		18B9F91F2B76C84500D67073 /* RadioNumberFomrView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B9F91E2B76C84500D67073 /* RadioNumberFomrView.swift */; };
 		18B9F9212B76D5B700D67073 /* SubmitSubveyFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B9F9202B76D5B700D67073 /* SubmitSubveyFormView.swift */; };
 		18C242502B88974200460E75 /* MinMaxLengthValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C2424F2B88974200460E75 /* MinMaxLengthValidation.swift */; };
+		18C7DBB82BA98B030044D9C4 /* SubveyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7DBB72BA98B030044D9C4 /* SubveyError.swift */; };
 		18C84A172B74C56E00143095 /* QuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C84A162B74C56E00143095 /* QuestionViewModel.swift */; };
 		18C84A192B74F27900143095 /* NumberFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C84A182B74F27900143095 /* NumberFormView.swift */; };
 		18C84A1C2B75027500143095 /* Subvey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C84A1B2B75027500143095 /* Subvey.swift */; };
@@ -45,6 +47,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18AEA9892BAAC82300A952C8 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		18B6EB5B2B6A5B6000F62458 /* APIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHandler.swift; sourceTree = "<group>"; };
 		18B7939B2B73626100BBD62C /* FormRenderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormRenderable.swift; sourceTree = "<group>"; };
 		18B7939D2B736E2B00BBD62C /* TextFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFormView.swift; sourceTree = "<group>"; };
@@ -66,6 +69,7 @@
 		18B9F91E2B76C84500D67073 /* RadioNumberFomrView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioNumberFomrView.swift; sourceTree = "<group>"; };
 		18B9F9202B76D5B700D67073 /* SubmitSubveyFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitSubveyFormView.swift; sourceTree = "<group>"; };
 		18C2424F2B88974200460E75 /* MinMaxLengthValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinMaxLengthValidation.swift; sourceTree = "<group>"; };
+		18C7DBB72BA98B030044D9C4 /* SubveyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubveyError.swift; sourceTree = "<group>"; };
 		18C84A162B74C56E00143095 /* QuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewModel.swift; sourceTree = "<group>"; };
 		18C84A182B74F27900143095 /* NumberFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormView.swift; sourceTree = "<group>"; };
 		18C84A1B2B75027500143095 /* Subvey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subvey.swift; sourceTree = "<group>"; };
@@ -95,6 +99,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		18AEA9882BAAC81200A952C8 /* extension */ = {
+			isa = PBXGroup;
+			children = (
+				18AEA9892BAAC82300A952C8 /* Data.swift */,
+			);
+			path = extension;
+			sourceTree = "<group>";
+		};
+		18AEA98B2BAAD03600A952C8 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				18C7DBB72BA98B030044D9C4 /* SubveyError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
 		18B91B0E2B87568800976F9E /* Validate */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,6 +238,8 @@
 		18D56EFC2B69234400B19F24 /* Subvey_Mission */ = {
 			isa = PBXGroup;
 			children = (
+				18AEA98B2BAAD03600A952C8 /* Error */,
+				18AEA9882BAAC81200A952C8 /* extension */,
 				18B91B0E2B87568800976F9E /* Validate */,
 				18C84A242B75035000143095 /* Network */,
 				18C84A1F2B7502B600143095 /* Page */,
@@ -323,12 +345,14 @@
 				18B91B362B876D2D00976F9E /* MaxValidation.swift in Sources */,
 				18B9F9212B76D5B700D67073 /* SubmitSubveyFormView.swift in Sources */,
 				18C8A1D22B8880E10065E8A1 /* ValidateError.swift in Sources */,
+				18C7DBB82BA98B030044D9C4 /* SubveyError.swift in Sources */,
 				18C8A1CE2B88486C0065E8A1 /* NotEqualValidation.swift in Sources */,
 				18C84A1C2B75027500143095 /* Subvey.swift in Sources */,
 				18B793A82B73A07A00BBD62C /* RadioFormView.swift in Sources */,
 				18D327F52B721EAA0095823E /* QuestionView.swift in Sources */,
 				18B91B492B876E7700976F9E /* Validator.swift in Sources */,
 				18C84A1E2B75028E00143095 /* Answer.swift in Sources */,
+				18AEA98A2BAAC82300A952C8 /* Data.swift in Sources */,
 				18B91B482B876E7700976F9E /* CustomValidator.swift in Sources */,
 				18D56F022B69234400B19F24 /* ViewController.swift in Sources */,
 				18B793A42B73828D00BBD62C /* RadioView.swift in Sources */,
