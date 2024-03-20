@@ -41,7 +41,7 @@ final class QuestionView: UIView {
     private lazy var btn: UIButton = {
         let btn = UIButton()
         btn.setTitle("next", for: .normal)
-        btn.setTitleColor(.black, for: .normal)
+        btn.setTitleColor(.systemBlue, for: .normal)
         btn.addTarget(self, action: #selector(nextQuestion), for: .touchUpInside)
         return btn
     }()

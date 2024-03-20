@@ -13,7 +13,7 @@ class QuestionViewController: UIViewController {
     private lazy var backQuestionButton: UIButton = {
         let btn = UIButton()
         btn.setTitle("이전 질문", for: .normal)
-        btn.setTitleColor(.black, for: .normal)
+        btn.setTitleColor(.systemBlue, for: .normal)
         btn.addTarget(self, action: #selector(backQuestion), for: .touchUpInside)
         return btn
     }()
@@ -67,6 +67,10 @@ class QuestionViewController: UIViewController {
         }
         
         updateProgress(progress: viewModel.getProgress())
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        progressBar.isHidden = true
     }
     
     @objc private func backQuestion() {
