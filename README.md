@@ -1,9 +1,15 @@
 ## 설명
 - 주류 설문 조사 앱
+서버에서 설문조사에 필요한 정보를 받아와 정보를 토대로 UI를 그리고 입력 폼에 따라 알맞은 Validation을 통해 입력한 내용을 서버에 보내주는 설문조사 앱입니다.
+
+
+## 시현 영상
+![Simulator Screen Recording - iPhone 14 Pro - 2024-03-21 at 20 59 37](https://github.com/three523/Subvey_mission/assets/71269216/b9b53370-8712-4774-bbc1-9116912abdeb)
+
 
 ## API
-Postman의 목업 서버를 사용하여 구현함
-https://512ab7c7-e29e-4a64-ace6-d1e98a5ce40f.mock.pstmn.io/api/question/common 기본 설문조사 질문
+Postman의 목업 서버를 사용하여 구현함   
+[기본설문조사 API URL](https://512ab7c7-e29e-4a64-ace6-d1e98a5ce40f.mock.pstmn.io/api/question/common)
 
 json 형식
 ```json
@@ -85,4 +91,3 @@ json 형식
 }
 ```
 
-## 
