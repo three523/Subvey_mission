@@ -12,22 +12,8 @@ final class QuestionView: UIView {
     
     enum QuestionMove {
         case next
-        case back
+        case previous
     }
-    
-    private let progressBar: UIView = {
-        let view: UIView = UIView()
-        view.layer.cornerRadius = 6
-        return view
-    }()
-    
-//    private var progressFillLayer: CGLayer?
-    private var progressFillView: UIView = {
-        let view: UIView = UIView()
-        view.layer.cornerRadius = 6
-        view.backgroundColor = .blue
-        return view
-    }()
     
     private let stackView: UIStackView = {
         let stackView: UIStackView = UIStackView()
@@ -49,7 +35,7 @@ final class QuestionView: UIView {
     private var isAnimating: Bool = false
     
     var onNextButtonTap: (() -> Void)?
-    var onBackButtonTap: (() -> Void)?
+    var onPreviousButtonTap: (() -> Void)?
     var subveyCompleteHandler: (() -> Void)?
     
     private var move: QuestionMove = .next
@@ -92,7 +78,8 @@ final class QuestionView: UIView {
         if isAnimating { return }
         
         if let error = currentView?.validate() {
-            print(error)
+            print(error.message)
+            error.action?()
         } else {
             if currentView is SubmitSubveyFormView {
                 subveyCompleteHandler?()
@@ -102,14 +89,9 @@ final class QuestionView: UIView {
         }
     }
     
-    @objc private func backQuestion() {
-        if isAnimating { return }
-        onBackButtonTap?()
-    }
-    
-    func back(prevForm: Form?, answer: Any?) {
+    func previous(prevForm: Form?, answer: Any?) {
         updateCurrentView(nextForm: prevForm, answer: answer)
-        move = .back
+        move = .previous
         fadeIn(move: move)
     }
     

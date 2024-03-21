@@ -9,7 +9,14 @@ import Foundation
 
 struct ValidateError: Error {
     var message: String
+    var action: (() -> Void)? = nil
+    
     init(message: String) {
         self.message = message
+    }
+    
+    init(message: String, action: @escaping (() -> Void)) {
+        self.init(message: message)
+        self.action = action
     }
 }

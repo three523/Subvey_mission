@@ -68,7 +68,7 @@ final class FormManager {
         return forms[nextIndex]
     }
     
-    func backQuestion() -> (Form?, Any?) {
+    func previousQuestion() -> (Form?, Any?) {
         guard let prevIndex, prevIndex < forms.count else {
             return (nil, nil)
         }
@@ -79,7 +79,7 @@ final class FormManager {
         return (forms[prevIndex], answer)
     }
     
-    func isExitsBackQuestion() -> Bool {
+    func isExitsPreviousQuestion() -> Bool {
         return prevIndex != nil
     }
     

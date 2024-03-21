@@ -5,7 +5,7 @@
 //  Created by 김도현 on 2024/02/07.
 //
 
-import Foundation
+import UIKit
 
 //TODO: 이름 고민해보기
 protocol FormRenderable {

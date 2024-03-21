@@ -18,7 +18,9 @@ class RadioWithInputView: UIStackView, FormCheckable {
         return textField
     }()
     
-    var value: String?
+    lazy var value: String? = {
+        return otherTextField.text
+    }()
     var radioUpdateHandler: ((String) -> Void)? {
         didSet {
             radioView.radioUpdateHandler = radioUpdateHandler
