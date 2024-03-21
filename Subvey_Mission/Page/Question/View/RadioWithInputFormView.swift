@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RadioWithInputFormView: UIStackView, FormRenderable {
+class RadioWithInputFormView: ErrorHandlerView, FormRenderable {
 
     var form: Form
     var type: FormType = .radioWithInput
@@ -22,13 +22,17 @@ class RadioWithInputFormView: UIStackView, FormRenderable {
         return label
     }()
     private var radioViews: [FormRadioView] = []
+    private var validator: FormValidator<[String]>? = nil
+    private lazy var defaultValidateError: ValidateError = ValidateError(message: "필수로 입력해야합니다") {
+        self.errorLabel.text = "필수로 입력해야 합니다."
+        self.errorLabel.isHidden = false
+    }
 
     init(form: Form, answer: Any? = nil) {
         self.type = .text
         self.form = form
         self.answer = answer
         super.init(frame: .zero)
-        setup()
     }
     
     required init(coder: NSCoder) {
@@ -98,26 +102,82 @@ class RadioWithInputFormView: UIStackView, FormRenderable {
     
     func getAnswer() -> [String: Any]? {
         let name = form.name
-        var value: [String: Any]?
+        var values = [String]()
         for radioView in radioViews {
             if radioView.isRadioSelected() {
-                value = radioView.getAnswer()
+                if let value = radioView.value {
+                    values.append(value)
+                }
             }
         }
-        guard let value else { return nil }
-        return [name: value]
+        return [name: values]
     }
     
     func validate() -> ValidateError? {
+        let tempAnswer = getAnswer()
+        answer = tempAnswer
+        if form.required {
+            guard let input = tempAnswer?[form.name] as? [String],
+                  input.isEmpty == false else { return defaultValidateError }
+            return validator?.validate(input: input)
+        } else {
+            if let input = tempAnswer?[form.name] as? [String] {
+                return validator?.validate(input: input)
+            }
+        }
         return nil
     }
     
     func createValidator() {
-        
+        let formValidator = FormValidator<[String]>()
+        form.validate.forEach { validate in
+            let error = ValidateError(message: validate.validateText) {
+                self.errorLabel.text = validate.validateText
+                self.isError = true
+            }
+            if validate.type == "minMaxLength" {
+                var minCount = 0
+                var maxCount = 0
+                
+                switch validate.target {
+                case .minMax(let minMax):
+                    if let minValue = minMax.first {
+                        switch minValue {
+                        case .int(let min):
+                            minCount = min
+                        case .string(_): break
+                        }
+                    }
+                    if let maxValue = minMax.last {
+                        switch maxValue {
+                        case .int(let max):
+                              maxCount = max
+                        case .string(_): break
+                        }
+                    }
+                default:
+                    print("잘못된 ValidateTarget 입니다.\(validate.target)")
+                    break
+                }
+                let minMaxLengthValidate = MinMaxArrayCountValidation<String>(fieldName: form.name, minCount: minCount, maxCount: maxCount, error: error)
+                formValidator.add(validate: minMaxLengthValidate)
+            } else if validate.type == "sameAS" {
+                switch validate.target {
+                case .stringArray(let eqaulValue):
+                    let equalValidate = ConfirmValidation(fieldName: form.name, compareValue: eqaulValue, error: error)
+                    formValidator.add(validate: equalValidate)
+                default:
+                    print("잘못된 ValidateTarget 입니다.\(validate.target)")
+                    break
+                }
+            }
+        }
+        self.validator = formValidator
     }
     
     private func createRadioUpdateHandler() -> ((String) -> Void)? {
         return { [weak self] value in
+            self?.isError = false
             self?.radioViews.forEach { radioView in
                 if radioView.value != value {
                     radioView.updateSelected(isSelected: false)
@@ -126,23 +186,15 @@ class RadioWithInputFormView: UIStackView, FormRenderable {
         }
     }
     
-}
-
-//MARK: Setup
-private extension RadioWithInputFormView {
-    func setup() {
-        setupInit()
-        setupSubViews()
+    //MARK: Setup
+    override func setup() {
+        super.setup()
         setupForm()
     }
     
-    func setupInit() {
+    override func setupInit() {
         axis = .vertical
         spacing = 20
-    }
-    
-    func setupSubViews() {
-        addArrangedSubview(questionLabel)
     }
     
     func setupForm() {
@@ -164,3 +216,4 @@ private extension RadioWithInputFormView {
         }
     }
 }
+

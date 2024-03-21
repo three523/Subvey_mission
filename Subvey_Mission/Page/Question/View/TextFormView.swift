@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class TextFormView: UIStackView, FormRenderable {
+final class TextFormView: ErrorHandlerView, FormRenderable {
     var type: FormType
     var form: Form
     var answer: Any?
@@ -18,16 +18,21 @@ final class TextFormView: UIStackView, FormRenderable {
         label.textColor = .black
         return label
     }()
-    private let answerTextField: UITextField = {
+    private lazy var answerTextField: UITextField = {
         let textField = UITextField()
         textField.font = .systemFont(ofSize: 16, weight: .regular)
         textField.textColor = .black
         textField.borderStyle = .roundedRect
         textField.text = ""
+        textField.delegate = self
         return textField
     }()
     
-    var validator: FormValidator<String>? = nil
+    private var validator: FormValidator<String>? = nil
+    private lazy var defaultValidateError: ValidateError = ValidateError(message: "필수로 입력해야합니다") {
+        self.errorLabel.text = "필수로 입력해야 합니다."
+        self.errorLabel.isHidden = false
+    }
 
     init(form: Form, answer: Any? = nil) {
         self.type = .text
@@ -37,7 +42,6 @@ final class TextFormView: UIStackView, FormRenderable {
         if let answer = answer as? String {
             answerTextField.text = answer
         }
-        setup()
     }
     
     required init(coder: NSCoder) {
@@ -61,7 +65,8 @@ final class TextFormView: UIStackView, FormRenderable {
     }
     
     func getAnswer() -> [String : Any]? {
-        let answer = answerTextField.text ?? ""
+        guard let text = answerTextField.text else { return nil }
+        let answer = text
         let name = form.name
         
         resetTextField()
@@ -70,13 +75,24 @@ final class TextFormView: UIStackView, FormRenderable {
     }
     
     func validate() -> ValidateError? {
-        return validator?.validate(input: answerTextField.text ?? "")
+        guard let text = answerTextField.text else { return defaultValidateError }
+        if text.isEmpty {
+            if form.required {
+                return defaultValidateError
+            } else {
+                return nil
+            }
+        }
+        return validator?.validate(input: text)
     }
     
     func createValidator() {
         let formValidator = FormValidator<String>()
         form.validate.forEach { validate in
-            let error = ValidateError(message: validate.validateText)
+            let error = ValidateError(message: validate.validateText) {
+                self.errorLabel.text = validate.validateText
+                self.isError = true
+            }
             if validate.type == "not" {
                 switch validate.target {
                 case .string(let compareValue):
@@ -139,24 +155,16 @@ final class TextFormView: UIStackView, FormRenderable {
         answerTextField.text = ""
         answerTextField.resignFirstResponder()
     }
-}
-
-private extension TextFormView {
-    func setup() {
-        setupInit()
-        setupSubViews()
+    
+    override func setup() {
+        super.setup()
         setupForm()
     }
     
-    func setupInit() {
-        axis = .vertical
-        alignment = .fill
-        distribution = .equalSpacing
-    }
-    
-    func setupSubViews() {
+    override func setupSubViews() {
         addArrangedSubview(questionLabel)
         addArrangedSubview(answerTextField)
+        super.setupSubViews()
     }
     
     func setupForm() {
@@ -167,5 +175,11 @@ private extension TextFormView {
             answerTextField.placeholder = placeholder
         default: break
         }
+    }
+}
+
+extension TextFormView: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        isError = false
     }
 }

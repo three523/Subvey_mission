@@ -13,7 +13,7 @@ final class QuestionViewModel {
     private var escapeValidates: [EscapeValidate]
     
     var formViewNextUpdateHandler: ((Form?) -> Void)?
-    var formViewBackUpdateHandler: ((Form?, Any?) -> Void)?
+    var formViewPreviousUpdateHandler: ((Form?, Any?) -> Void)?
     var formViewProgressUpdateHandler: ((CGFloat?) -> Void)?
     var subveyCompleteHandler: (() -> Void)?
     
@@ -29,11 +29,11 @@ final class QuestionViewModel {
         formViewNextUpdateHandler?(nextForm)
     }
     
-    func fetchBackQuestion() {
-        let (backForm, answer) = formManager.backQuestion()
-        guard let backForm else { return }
+    func fetchPreviousQuestion() {
+        let (previousForm, answer) = formManager.previousQuestion()
+        guard let previousForm else { return }
         formViewProgressUpdateHandler?(formManager.getProgress())
-        formViewBackUpdateHandler?(backForm, answer)
+        formViewPreviousUpdateHandler?(previousForm, answer)
     }
     
     func updateAnswer(answer: [String: Any]?) {
@@ -74,6 +74,7 @@ final class QuestionViewModel {
                             self?.formManager.forms = forms
                             DispatchQueue.main.async {
                                 self?.formViewNextUpdateHandler?(forms.first)
+                                self?.formViewProgressUpdateHandler?(self?.formManager.getProgress())
                             }
                         case .failure(let failure):
                             print(failure.localizedDescription)

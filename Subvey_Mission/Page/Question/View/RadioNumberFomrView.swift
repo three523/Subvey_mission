@@ -15,7 +15,7 @@ enum ValidateType: String {
     case minMaxLength
 }
 
-final class RadioNumberFormView: UIStackView, FormRenderable {
+final class RadioNumberFormView: ErrorHandlerView, FormRenderable {
     var type: FormType
     var form: Form
     var answer: Any?
@@ -47,7 +47,6 @@ final class RadioNumberFormView: UIStackView, FormRenderable {
         self.form = form
         self.answer = answer
         super.init(frame: .zero)
-        setup()
     }
     
     required init(coder: NSCoder) {
@@ -90,7 +89,10 @@ final class RadioNumberFormView: UIStackView, FormRenderable {
     func createValidator() {
         let formValidator = FormValidator<Int>()
         form.validate.forEach { validate in
-            let error = ValidateError(message: validate.validateText)
+            let error = ValidateError(message: validate.validateText) {
+                self.errorLabel.text = validate.validateText
+                self.isError = true
+            }
             if validate.type == "not" {
                 switch validate.target {
                 case .int(let compareValue):
@@ -136,22 +138,13 @@ final class RadioNumberFormView: UIStackView, FormRenderable {
         }
         self.validator = formValidator
     }
-}
-
-private extension RadioNumberFormView {
-    func setup() {
-        setupInit()
-        setupSubViews()
+    
+    override func setup() {
+        super.setup()
         setupForm()
     }
     
-    func setupInit() {
-        axis = .vertical
-        alignment = .fill
-        distribution = .equalSpacing
-    }
-    
-    func setupSubViews() {
+    override func setupSubViews() {
         addArrangedSubview(questionLabel)
         addArrangedSubview(slider)
         addArrangedSubview(answerLabel)

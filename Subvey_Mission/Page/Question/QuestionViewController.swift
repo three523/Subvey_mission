@@ -10,11 +10,11 @@ import SnapKit
 
 class QuestionViewController: UIViewController {
     
-    private lazy var backQuestionButton: UIButton = {
+    private lazy var previousQuestionButton: UIButton = {
         let btn = UIButton()
         btn.setTitle("이전 질문", for: .normal)
         btn.setTitleColor(.systemBlue, for: .normal)
-        btn.addTarget(self, action: #selector(backQuestion), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(previousQuestion), for: .touchUpInside)
         return btn
     }()
     
@@ -40,7 +40,7 @@ class QuestionViewController: UIViewController {
         self.questionView = QuestionView(form: viewModel.getCurrentForm()!)
         super.init(nibName: nil, bundle: nil)
         
-        backButtonUpdate()
+        previousButtonUpdate()
         bind()
     }
     
@@ -51,10 +51,10 @@ class QuestionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(progressBar)
-        view.addSubview(backQuestionButton)
+        view.addSubview(previousQuestionButton)
         view.addSubview(questionView)
         let safeArea = view.safeAreaLayoutGuide
-        backQuestionButton.snp.makeConstraints { make in
+        previousQuestionButton.snp.makeConstraints { make in
             make.top.left.equalTo(safeArea).inset(16)
         }
         progressBar.snp.makeConstraints { make in
@@ -73,9 +73,9 @@ class QuestionViewController: UIViewController {
         progressBar.isHidden = true
     }
     
-    @objc private func backQuestion() {
-        viewModel.fetchBackQuestion()
-        backButtonUpdate()
+    @objc private func previousQuestion() {
+        viewModel.fetchPreviousQuestion()
+        previousButtonUpdate()
     }
     
     private func bind() {
@@ -87,33 +87,33 @@ class QuestionViewController: UIViewController {
             DispatchQueue.main.async {
                 let answer = self?.questionView.next(nextForm: form)
                 self?.viewModel.updateAnswer(answer: answer)
-                self?.backButtonUpdate()
+                self?.previousButtonUpdate()
             }
         }
-        viewModel.formViewBackUpdateHandler = { [weak self] form, answer in
+        viewModel.formViewPreviousUpdateHandler = { [weak self] form, answer in
             DispatchQueue.main.async {
-                self?.questionView.back(prevForm: form, answer: answer)
+                self?.questionView.previous(prevForm: form, answer: answer)
             }
         }
         viewModel.subveyCompleteHandler = { [weak self] in
             DispatchQueue.main.async {
-                self?.navigationController?.popViewController(animated: true)
+                self?.dismiss(animated: true)
             }
         }
         
         questionView.onNextButtonTap = { [weak self] in
             self?.viewModel.fetchNextQuestion()
-            self?.backButtonUpdate()
+            self?.previousButtonUpdate()
         }
         
-        questionView.onBackButtonTap = { [weak self] in
-            self?.viewModel.fetchBackQuestion()
-            self?.backButtonUpdate()
+        questionView.onPreviousButtonTap = { [weak self] in
+            self?.viewModel.fetchPreviousQuestion()
+            self?.previousButtonUpdate()
         }
         
         questionView.subveyCompleteHandler = { [weak self] in
             self?.viewModel.submitAnswer()
-            self?.backButtonUpdate()
+            self?.previousButtonUpdate()
         }
         
     }
@@ -151,8 +151,8 @@ class QuestionViewController: UIViewController {
         progressPersent = progress
     }
     
-    func backButtonUpdate() {
-        backQuestionButton.isHidden = !formManager.isExitsBackQuestion()
+    func previousButtonUpdate() {
+        previousQuestionButton.isHidden = !formManager.isExitsPreviousQuestion()
     }
 
 }

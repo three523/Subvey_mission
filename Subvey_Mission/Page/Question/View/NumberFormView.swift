@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class NumberFormView: UIStackView, FormRenderable {
+final class NumberFormView: ErrorHandlerView, FormRenderable {
     var type: FormType
     var form: Form
     var validator: FormValidator<Int>? = nil
@@ -19,13 +19,18 @@ final class NumberFormView: UIStackView, FormRenderable {
         label.textColor = .black
         return label
     }()
-    private let answerTextField: UITextField = {
+    private lazy var answerTextField: UITextField = {
         let textField = UITextField()
         textField.font = .systemFont(ofSize: 16, weight: .regular)
         textField.textColor = .black
         textField.borderStyle = .roundedRect
+        textField.delegate = self
         return textField
     }()
+    private lazy var defaultError: ValidateError = ValidateError(message: "숫자를 입력해야 합니다") {
+        self.errorLabel.text = "숫자를 입력해야합니다."
+        self.errorLabel.isHidden = false
+    }
 
     init(form: Form, answer: Any? = nil) {
         self.type = .text
@@ -35,7 +40,6 @@ final class NumberFormView: UIStackView, FormRenderable {
         if let answer = answer as? Int {
             answerTextField.text = String(answer)
         }
-        setup()
     }
     
     required init(coder: NSCoder) {
@@ -51,7 +55,7 @@ final class NumberFormView: UIStackView, FormRenderable {
             } else {
                 switch nextForm.placeholder {
                 case .int(let number):
-                    self.answerTextField.text = String(number)
+                    self.answerTextField.placeholder = String(number)
                 default: break
                 }
             }
@@ -59,21 +63,34 @@ final class NumberFormView: UIStackView, FormRenderable {
     }
     
     func getAnswer() -> [String : Any]? {
-        let answer: Int = Int(self.answerTextField.text ?? "-1") ?? -1
         let name = form.name
-        
+        guard let text = answerTextField.text,
+              let number = Int(text) else { return nil }
+        answer = number
         resetTextField()
-        return [name: answer]
+        return [name: number]
     }
     
     func validate() -> ValidateError? {
-        return nil
+        guard let text = answerTextField.text else { return defaultError }
+        if text.isEmpty {
+            if form.required {
+                return defaultError
+            } else {
+                return nil
+            }
+        }
+        guard let number = Int(text) else { return defaultError }
+        return validator?.validate(input: number)
     }
     
     func createValidator() {
         let formValidator = FormValidator<Int>()
         form.validate.forEach { validate in
-            let error = ValidateError(message: validate.validateText)
+            let error = ValidateError(message: validate.validateText) {
+                self.errorLabel.text = validate.validateText
+                self.isError = true
+            }
             if validate.type == "not" {
                 switch validate.target {
                 case .int(let compareValue):
@@ -121,27 +138,20 @@ final class NumberFormView: UIStackView, FormRenderable {
     }
     
     private func resetTextField() {
-        answerTextField.text = "0"
+        answerTextField.text = ""
         answerTextField.resignFirstResponder()
     }
-}
-
-private extension NumberFormView {
-    func setup() {
-        setupInit()
-        setupSubViews()
+    
+    override func setup() {
+        super.setup()
         setupForm()
     }
     
-    func setupInit() {
-        axis = .vertical
-        alignment = .fill
-        distribution = .equalSpacing
-    }
-    
-    func setupSubViews() {
+    override func setupSubViews() {
         addArrangedSubview(questionLabel)
         addArrangedSubview(answerTextField)
+        addArrangedSubview(errorLabel)
+        super.setupSubViews()
     }
     
     func setupForm() {
@@ -152,9 +162,15 @@ private extension NumberFormView {
         } else {
             switch form.placeholder {
             case .int(let number):
-                answerTextField.text = String(number)
+                answerTextField.placeholder = String(number)
             default: break
             }
         }
+    }
+}
+
+extension NumberFormView: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        isError = false
     }
 }

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		18AEA98A2BAAC82300A952C8 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AEA9892BAAC82300A952C8 /* Data.swift */; };
+		18AEA98D2BAADD4F00A952C8 /* ErrorHandlerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AEA98C2BAADD4F00A952C8 /* ErrorHandlerView.swift */; };
+		18AEA98F2BAAEF9300A952C8 /* MinMaxArrayCountValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AEA98E2BAAEF9300A952C8 /* MinMaxArrayCountValidation.swift */; };
+		18AEA9912BAAF10700A952C8 /* NotEmptyValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AEA9902BAAF10700A952C8 /* NotEmptyValidation.swift */; };
 		18B62F8B2B6BBCB600DE67B0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 18B62F8A2B6BBCB600DE67B0 /* SnapKit */; };
 		18B6EB5C2B6A5B6000F62458 /* APIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EB5B2B6A5B6000F62458 /* APIHandler.swift */; };
 		18B7939C2B73626100BBD62C /* FormRenderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B7939B2B73626100BBD62C /* FormRenderable.swift */; };
@@ -48,6 +51,9 @@
 
 /* Begin PBXFileReference section */
 		18AEA9892BAAC82300A952C8 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		18AEA98C2BAADD4F00A952C8 /* ErrorHandlerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandlerView.swift; sourceTree = "<group>"; };
+		18AEA98E2BAAEF9300A952C8 /* MinMaxArrayCountValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinMaxArrayCountValidation.swift; sourceTree = "<group>"; };
+		18AEA9902BAAF10700A952C8 /* NotEmptyValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotEmptyValidation.swift; sourceTree = "<group>"; };
 		18B6EB5B2B6A5B6000F62458 /* APIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHandler.swift; sourceTree = "<group>"; };
 		18B7939B2B73626100BBD62C /* FormRenderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormRenderable.swift; sourceTree = "<group>"; };
 		18B7939D2B736E2B00BBD62C /* TextFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFormView.swift; sourceTree = "<group>"; };
@@ -136,6 +142,8 @@
 				18B91B242B876D2D00976F9E /* MaxValidation.swift */,
 				18C8A1CF2B8857480065E8A1 /* MinValidation.swift */,
 				18C2424F2B88974200460E75 /* MinMaxLengthValidation.swift */,
+				18AEA98E2BAAEF9300A952C8 /* MinMaxArrayCountValidation.swift */,
+				18AEA9902BAAF10700A952C8 /* NotEmptyValidation.swift */,
 			);
 			path = Validations;
 			sourceTree = "<group>";
@@ -199,6 +207,7 @@
 				18B9F91C2B76B7EB00D67073 /* FormCheckable.swift */,
 				18B9F91E2B76C84500D67073 /* RadioNumberFomrView.swift */,
 				18B9F9202B76D5B700D67073 /* SubmitSubveyFormView.swift */,
+				18AEA98C2BAADD4F00A952C8 /* ErrorHandlerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -339,6 +348,7 @@
 				18B94DAB2B6CBA3A00EEDCF6 /* QuestionViewController.swift in Sources */,
 				18C242502B88974200460E75 /* MinMaxLengthValidation.swift in Sources */,
 				18B91B382B876D2D00976F9E /* Validatable.swift in Sources */,
+				18AEA98F2BAAEF9300A952C8 /* MinMaxArrayCountValidation.swift in Sources */,
 				18B91B3A2B876D2D00976F9E /* CustomValidation.swift in Sources */,
 				18B7939E2B736E2B00BBD62C /* TextFormView.swift in Sources */,
 				18B7939C2B73626100BBD62C /* FormRenderable.swift in Sources */,
@@ -350,6 +360,7 @@
 				18C84A1C2B75027500143095 /* Subvey.swift in Sources */,
 				18B793A82B73A07A00BBD62C /* RadioFormView.swift in Sources */,
 				18D327F52B721EAA0095823E /* QuestionView.swift in Sources */,
+				18AEA98D2BAADD4F00A952C8 /* ErrorHandlerView.swift in Sources */,
 				18B91B492B876E7700976F9E /* Validator.swift in Sources */,
 				18C84A1E2B75028E00143095 /* Answer.swift in Sources */,
 				18AEA98A2BAAC82300A952C8 /* Data.swift in Sources */,
@@ -363,6 +374,7 @@
 				18B91B342B876D2D00976F9E /* RequiredFieldValidation.swift in Sources */,
 				18B91B392B876D2D00976F9E /* ConfirmValidation.swift in Sources */,
 				18C84A172B74C56E00143095 /* QuestionViewModel.swift in Sources */,
+				18AEA9912BAAF10700A952C8 /* NotEmptyValidation.swift in Sources */,
 				18B793A02B737EA500BBD62C /* RadioWithInputFormView.swift in Sources */,
 				18D56F002B69234400B19F24 /* SceneDelegate.swift in Sources */,
 			);
