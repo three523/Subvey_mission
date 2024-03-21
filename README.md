@@ -4,7 +4,8 @@
 
 
 ## 시현 영상
-![SimulatorScreenRecording-iPhone14Pro-2024-03-21at21 14 21-ezgif com-video-to-gif-converter](https://github.com/three523/Subvey_mission/assets/71269216/4dcfb9fb-4b1a-4ffd-a2c8-29795dc01fa4)
+<img src="https://github.com/three523/Subvey_mission/assets/71269216/4dcfb9fb-4b1a-4ffd-a2c8-29795dc01fa4" width="250" height="400"/>
+
 
 
 ## API
