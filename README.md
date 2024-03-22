@@ -34,6 +34,7 @@ sequenceDiagram
 ## API
 Postman의 목업 서버를 사용하여 구현함   
 [기본설문조사 API URL](https://512ab7c7-e29e-4a64-ace6-d1e98a5ce40f.mock.pstmn.io/api/question/common)
+[추가설문조사 API URL](https://512ab7c7-e29e-4a64-ace6-d1e98a5ce40f.mock.pstmn.io/api/question/1)
 
 json 형식
 ```json
