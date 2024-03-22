@@ -7,7 +7,7 @@ Server Driven UI를 구현을 위해 제작
 
 
 ## 시현 영상
-<img src="https://github.com/three523/Subvey_mission/assets/71269216/4dcfb9fb-4b1a-4ffd-a2c8-29795dc01fa4" width="250" height="400"/>
+<img src="https://github.com/three523/Subvey_mission/assets/71269216/3d7dd8cb-89d1-487e-a05f-374309cebabe" width="250" height="400"/>
 
 ## 로직
 ```mermaid
