@@ -1,7 +1,8 @@
 
 
 ## 설명  
-서버에서 설문조사에 필요한 정보를 받아와 정보를 토대로 UI를 그리고 입력 폼에 따라 알맞은 Validation을 통해 입력한 내용을 서버에 보내주는 설문조사 앱입니다.    
+서버에서 설문조사에 필요한 정보를 받아와 정보를 토대로 UI를 그리고 입력 폼에 따라 알맞은 유효성 검사를 하고 문제가 없으면   
+통해 입력한 내용을 서버에 보내주는 설문조사 앱입니다.    
 
 
 ## 시현 영상
@@ -55,87 +56,10 @@ Postman의 목업 서버를 사용하여 구현함
 [기본설문조사 API URL](https://512ab7c7-e29e-4a64-ace6-d1e98a5ce40f.mock.pstmn.io/api/question/common)   
 [추가설문조사 API URL](https://512ab7c7-e29e-4a64-ace6-d1e98a5ce40f.mock.pstmn.io/api/question/1)
 
-json 형식
-```json
-{
-    "status": 200,
-    "data": {
-        "forms": [
-            {
-                "name": "name",
-                "question": "이름을 입력해주세요.",
-                "required": true,
-                "type": "text",
-                "placeholder": "이름",
-                "validate": [
-                    {
-                        "type": "not",
-                        "target": "",
-                        "validateText": "이름을 입력해주세요."
-                    },
-                    {
-                        "type": "minMaxLength",
-                        "target": [2, "-"],
-                        "validateText": "이름을 2글자 이상 입력해주세요."
-                    }
-                ]
-            },
-            {
-                "name": "email",
-                "question": "이메일을 입력해주세요.",
-                "required": true,
-                "type": "text",
-                "placeholder": "000@gmail.com",
-                "validate": [
-                    {
-                        "type": "not",
-                        "target": "",
-                        "validateText": "이메일을 입력해주세요."
-                    },
-                    {
-                        "type": "pattern",
-                        "target": "^([\\w\\.\\_\\-])*[a-zA-Z0-9]+([\\w\\.\\_\\-])*([a-zA-Z0-9])+([\\w\\.\\_\\-])+@([a-zA-Z0-9]+\\.)+[a-zA-Z0-9]{2,8}$",
-                        "validateText": "이메일 주소 형식이 올바르지 않습니다."
-                    }
-                ]
-            },
-            {
-                "name": "age",
-                "question": "나이를 입력해주세요.",
-                "required": true,
-                "type": "number",
-                "placeholder": 0,
-                "validate": [
-                    {
-                        "type": "not",
-                        "target": 0,
-                        "validateText": "나이를 입력해주세요."
-                    }
-                ]
-            },
-            {
-                "name": "like",
-                "question": "술을 얼마나 좋아하십니까?",
-                "required": true,
-                "type": "radioNumber",
-                "placeholder": 0,
-                "validate": [
-
-                ]
-            }
-        ],
-        "escapeValidate": [
-            {
-               "name": "age",
-               "type": "minMax",
-               "target": [19, "-"]
-            }
-        ]
-    }
-}
-```
-
 ## 구현
+- [애니메이션을 통한 화면전환](https://github.com/three523/Subvey_mission/blob/main/doc/%ED%99%94%EB%A9%B4%EC%A0%84%ED%99%98%EA%B8%B0%EB%8A%A5%EA%B5%AC%ED%98%84.md)
+- Json 형식에 따라 다른 UI가 보이도록 구현
+- 각자 다른 뷰에도 모두 Json에서 가져온 Validation을 적용할 수 있도록 기능 구현
 Json에는 Form 별로 여러개의 유효성 검사를 해줄 필요가 있다.    
 예를 들면 이메일을 입력하는 설문 폼의 경우엔 이름이 비어있을 경우 체크와 2글자 이상인지 체크를 해줄 필요가 있다.    
 각 Form에 맞는 View안에 Validation이 맞는지 체크하는 클래스를 배열로 만들어두고 다음 질문 버튼 클릭시 모든 유효성 검사를 실행하도록 구현    
