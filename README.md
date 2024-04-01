@@ -1,13 +1,33 @@
 
 
-## 설명
-- 주류 설문 조사 앱   
+## 설명  
 서버에서 설문조사에 필요한 정보를 받아와 정보를 토대로 UI를 그리고 입력 폼에 따라 알맞은 Validation을 통해 입력한 내용을 서버에 보내주는 설문조사 앱입니다.    
 
 
 ## 시현 영상
 <img src="https://github.com/three523/Subvey_mission/assets/71269216/3d7dd8cb-89d1-487e-a05f-374309cebabe" width="250" height="400"/>
 
+## 파일 구조
+```
+Subvey_Mission
+│  ├─ Entity // API를 통해 가져온 json 데이터 구조체 디텍토리
+│  ├─ Error  // Validation을 제외한 일반적인 Error 관련 디렉토리
+│  ├─ FormManager.swift // Form의 모든 값을 가지고 있는 클래스
+|  ├─Network // 네트워크 관련 작업 디렉토리
+│  ├─ Page // 각 화면별 디렉토리
+│  │  ├─ Main // 첫 시작 화면
+│  │  └─ Question // 설문조사 화면
+│  │     ├─ View // Question 화면에 필요한 View 디텍토리
+│  │     └─ ViewModel // Question 화면에 필요한 ViewModel
+| FormRenderable.swift // View가 다시 그려질 수 있도록 만든 프로토콜
+|  ├─Validate
+│  │  ├─ ValidateError.swift // Validate 실패할때 message를 담고 있는 구조체
+|  |  ├─ Validations // validation 작업을 하는 클래스들의 디렉토리(emailValidation, MaxLengthValidation 등등)
+│  │  └─ Validators // Validation을 추가하거나 삭제하는등 validation 작업을 모아놓은 클래스 *CustomValidator 제거하기*
+│  └─ extension
+│     └─ Data.swift // Data 데이터 타입 디코딩에 문제가 생길때 에러가 print로 출력되도록 extension
+└─ doc
+```
 ## 로직
 ```mermaid
 sequenceDiagram
