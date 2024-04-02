@@ -1,9 +1,9 @@
-//
-//  FormManager.swift
-//  Subvey_Mission
-//
-//  Created by 김도현 on 2024/02/10.
-//
+/*
+ 
+ 서버에서 받은 모든 질문 사항(Form)을 받아 관리하는 클래스
+ 관리는 서버에 보낼 질문에 대한 대답, 현재 진행도, 다음 질문 전달, 이전 질문 전달 등이 있다.
+ 
+*/
 
 import Foundation
 
@@ -15,6 +15,7 @@ final class FormManager {
             answers = [:]
         }
     }
+    // 서버에 데이터를 전달해주거나 요청할때 id를 받아야함, 새로운 Form을 받을때 새로운 값으로 변경됨
     var typeId: String = "common"
     var currentIndex: Int? {
         didSet {
@@ -41,7 +42,7 @@ final class FormManager {
         return forms[currentIndex]
     }
     
-    func updateValue(question: String, answer: Any) {
+    func updateAnswer(question: String, answer: Any) {
         answers[question] = answer
     }
     
@@ -68,6 +69,7 @@ final class FormManager {
         return forms[nextIndex]
     }
     
+    //이전 질문으로 돌아갈때에는 이미 작성한 설문이 있을 경우 보여줘야하기 때문에 answer도 같이 보내줌
     func previousQuestion() -> (Form?, Any?) {
         guard let prevIndex, prevIndex < forms.count else {
             return (nil, nil)

@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class TextFormView: ErrorHandlerView, FormRenderable {
+final class TextFormView: ErrorHandlerView, FormReRenderView {
     var type: FormType
     var form: Form
     var answer: Any?

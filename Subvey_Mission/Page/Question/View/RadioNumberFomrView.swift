@@ -15,7 +15,7 @@ enum ValidateType: String {
     case minMaxLength
 }
 
-final class RadioNumberFormView: ErrorHandlerView, FormRenderable {
+final class RadioNumberFormView: ErrorHandlerView, FormReRenderView {
     var type: FormType
     var form: Form
     var answer: Any?

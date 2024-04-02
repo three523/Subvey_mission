@@ -1,14 +1,14 @@
-//
-//  ViewController.swift
-//  Subvey_Mission
-//
-//  Created by 김도현 on 2024/01/30.
-//
+/*
+
+ 홈 화면의 컨트롤러
+ 설문을 가져오는 작업 수행
+ 
+*/
 
 import UIKit
 import SnapKit
 
-final class ViewController: UIViewController {
+final class HomeViewController: UIViewController {
     
     private let handler = APIHandler()
     private let startButton: UIButton = {
@@ -54,11 +54,59 @@ final class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
+    }
+    
+    private func fetchSubvey(completion: @escaping (Result<(viewModel: QuestionViewModel, formManager: FormManager), NetworkError>) -> Void) {
+        isLoading = true
+        handler.fetchSubvey(typeID: "common") { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let subvey):
+                let formManager = FormManager(forms: subvey.data.forms)
+                let viewModel = QuestionViewModel(formManager: formManager, apiHandler: APIHandler(), escapeValidates: subvey.data.escapeValidate)
+                completion(.success((viewModel: viewModel, formManager: formManager)))
+            case .failure(let failure):
+                print(failure.localizedDescription)
+                completion(.failure(failure))
+                //TODO: 첫 설문 실패시 에러 처리
+            }
+            self.isLoading = false
+        }
+    }
+    
+    func presentQuestionViewController(viewModel: QuestionViewModel, formManager: FormManager) {
+        DispatchQueue.main.async {
+            let vc = QuestionViewController(formManager: formManager, viewModel: viewModel)
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true)
+        }
+    }
+    
+    private func hiddenErrorView(value: Bool) {
+        startButton.isHidden = !value
+        errorLabel.isHidden = value
+        refreshButton.isHidden = value
+    }
+
+}
+
+//MARK: Setup
+private extension HomeViewController {
+    func setup() {
+        setupAddViews()
+        setupAutoLayout()
+        setupAction()
+    }
+    
+    func setupAddViews() {
         view.addSubview(startButton)
         view.addSubview(errorLabel)
         view.addSubview(refreshButton)
         view.addSubview(lodingView)
-        
+    }
+    
+    func setupAutoLayout() {
         let safeArea = view.safeAreaLayoutGuide
         
         startButton.snp.makeConstraints { make in
@@ -76,10 +124,11 @@ final class ViewController: UIViewController {
         lodingView.snp.makeConstraints { make in
             make.edges.equalTo(safeArea)
         }
-        
+    }
+    
+    func setupAction() {
         startButton.addTarget(self, action: #selector(startSubvey), for: .touchUpInside)
         refreshButton.addTarget(self, action: #selector(reloadSubvey), for: .touchUpInside)
-        // Do any additional setup after loading the view.
     }
     
     @objc private func startSubvey() {
@@ -125,37 +174,4 @@ final class ViewController: UIViewController {
             }
         }
     }
-    
-    func fetchSubvey(completion: @escaping (Result<(viewModel: QuestionViewModel, formManager: FormManager), SubveyError>) -> Void) {
-        isLoading = true
-        handler.fetchSubvey(typeID: "common") { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let subvey):
-                let formManager = FormManager(forms: subvey.data.forms)
-                let viewModel = QuestionViewModel(formManager: formManager, apiHandler: APIHandler(), escapeValidates: subvey.data.escapeValidate)
-                completion(.success((viewModel: viewModel, formManager: formManager)))
-            case .failure(let failure):
-                print(failure.localizedDescription)
-                completion(.failure(failure))
-                //TODO: 첫 설문 실패시 에러 처리
-            }
-            self.isLoading = false
-        }
-    }
-    
-    func presentQuestionViewController(viewModel: QuestionViewModel, formManager: FormManager) {
-        DispatchQueue.main.async {
-            let vc = QuestionViewController(formManager: formManager, viewModel: viewModel)
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true)
-        }
-    }
-    
-    private func hiddenErrorView(value: Bool) {
-        startButton.isHidden = !value
-        errorLabel.isHidden = value
-        refreshButton.isHidden = value
-    }
-
 }

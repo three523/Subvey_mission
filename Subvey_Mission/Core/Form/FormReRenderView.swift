@@ -1,14 +1,12 @@
-//
-//  Form.swift
-//  Subvey_Mission
-//
-//  Created by 김도현 on 2024/02/07.
-//
+/*
+ 
+ Form을 받는 UI를 가진 View의 필요한 기능들을 담은 프로토콜
+ 
+*/
 
 import UIKit
 
-//TODO: 이름 고민해보기
-protocol FormRenderable {
+protocol FormReRenderView {
     var type: FormType { get }
     var form: Form { get }
     var answer: Any? { get }

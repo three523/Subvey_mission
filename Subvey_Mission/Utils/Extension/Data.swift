@@ -1,9 +1,9 @@
-//
-//  Data.swift
-//  Subvey_Mission
-//
-//  Created by 김도현 on 2024/03/20.
-//
+/*
+ 
+ decode시 어떤 문제로 디코딩이 실패했는지 프린트하여
+ 확인하기 위해 extension을 사용함
+ 
+*/
 
 import Foundation
 
