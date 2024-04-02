@@ -62,7 +62,7 @@ Postman의 목업 서버를 사용하여 구현함
 ## 구현
 - [애니메이션을 통한 화면전환](https://github.com/three523/Subvey_mission/blob/main/doc/%ED%99%94%EB%A9%B4%EC%A0%84%ED%99%98%EA%B8%B0%EB%8A%A5%EA%B5%AC%ED%98%84.md)
 - Json 형식에 따라 다른 UI가 보이도록 구현
-- 각자 다른 뷰에도 모두 Json에서 가져온 Validation을 적용할 수 있도록 기능 구현
+- [Validation 기능 구현](https://github.com/three523/Subvey_mission/blob/main/doc/Validation_%EA%B8%B0%EB%8A%A5%EA%B5%AC%ED%98%84.md)
 Json에는 Form 별로 여러개의 유효성 검사를 해줄 필요가 있다.    
 예를 들면 이메일을 입력하는 설문 폼의 경우엔 이름이 비어있을 경우 체크와 2글자 이상인지 체크를 해줄 필요가 있다.    
 각 Form에 맞는 View안에 Validation이 맞는지 체크하는 클래스를 배열로 만들어두고 다음 질문 버튼 클릭시 모든 유효성 검사를 실행하도록 구현    
@@ -96,3 +96,11 @@ formValidator.validate(input: answerTextField.text ?? "")
 validate를 해주면 모든 유효성 검사를 진행하게 된다.
 만약 nil이 반환 될경우 다음 질문으로 넘어가고    
 아닐 경우 Validation에 들어가있는 error가 실행되도록 구현되어있다.
+
+## 아쉬웠던점
+일단 다양한 타입이 올 수 있다는 것이 디코딩 작업을 하는 것도 생각보다 복잡하다고 느껴졌다.    
+또한 각자 타입에 맞는 Validate를 해주고 다시 그려야 하다보니 굉장히 많은 조건문이 생기는 문제가 발생했다.    
+Validation을 생성 하는 것은 팩토리 패턴으로 어떻게 구현할 수 있을지 고민을 하고 있는 중이다.    
+
+또한 라이브러리를 따라하지 않으려고 억지로 뷰안에 Validator를 넣어서 뷰안에서 Validate를 하는 작업을 하였는데 좋지 않은 방법이였다.    
+뷰 안에서는 값만 가지고 있고 그 값을 ViewController에서 버튼 클릭시 가져오는 방식으로 구현 했으면 View안에서는 뷰 전환만 하는 방법이 있었지 않을까 싶다.    
