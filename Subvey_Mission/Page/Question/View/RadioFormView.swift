@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RadioFormView: ErrorHandlerView, FormRenderable {
+class RadioFormView: ErrorHandlerView, FormReRenderView {
 
     var form: Form
     var type: FormType = .radio

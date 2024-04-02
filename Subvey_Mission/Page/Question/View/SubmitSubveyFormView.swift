@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SubmitSubveyFormView: UIStackView, FormRenderable {
+final class SubmitSubveyFormView: UIStackView, FormReRenderView {
     var type: FormType
     var form: Form
     var answer: Any?

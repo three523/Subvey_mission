@@ -7,23 +7,23 @@
 
 import Foundation
 
-struct SubveyErrorData: Codable, Error {
+struct NetworkErrorData: Codable, Error {
     var name: String
     var message: String
     var header: String
 }
 
-enum SubveyError: Error {
+enum NetworkError: Error {
     case notConnectedToInternet
-    case notFound(SubveyErrorData)
-    case mockServerRequest(SubveyErrorData)
+    case notFound(NetworkErrorData)
+    case mockServerRequest(NetworkErrorData)
     case serverError
     case decodingError
     case unknowError
     case postError
 }
 
-extension SubveyError: LocalizedError {
+extension NetworkError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .notConnectedToInternet:

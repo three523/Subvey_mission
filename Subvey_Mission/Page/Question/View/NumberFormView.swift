@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class NumberFormView: ErrorHandlerView, FormRenderable {
+final class NumberFormView: ErrorHandlerView, FormReRenderView {
     var type: FormType
     var form: Form
     var validator: FormValidator<Int>? = nil

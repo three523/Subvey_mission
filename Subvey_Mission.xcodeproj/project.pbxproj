@@ -13,7 +13,7 @@
 		18AEA9912BAAF10700A952C8 /* NotEmptyValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AEA9902BAAF10700A952C8 /* NotEmptyValidation.swift */; };
 		18B62F8B2B6BBCB600DE67B0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 18B62F8A2B6BBCB600DE67B0 /* SnapKit */; };
 		18B6EB5C2B6A5B6000F62458 /* APIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B6EB5B2B6A5B6000F62458 /* APIHandler.swift */; };
-		18B7939C2B73626100BBD62C /* FormRenderable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B7939B2B73626100BBD62C /* FormRenderable.swift */; };
+		18B7939C2B73626100BBD62C /* FormReRenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B7939B2B73626100BBD62C /* FormReRenderView.swift */; };
 		18B7939E2B736E2B00BBD62C /* TextFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B7939D2B736E2B00BBD62C /* TextFormView.swift */; };
 		18B793A02B737EA500BBD62C /* RadioWithInputFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B7939F2B737EA500BBD62C /* RadioWithInputFormView.swift */; };
 		18B793A42B73828D00BBD62C /* RadioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B793A32B73828D00BBD62C /* RadioView.swift */; };
@@ -33,7 +33,7 @@
 		18B9F91F2B76C84500D67073 /* RadioNumberFomrView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B9F91E2B76C84500D67073 /* RadioNumberFomrView.swift */; };
 		18B9F9212B76D5B700D67073 /* SubmitSubveyFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B9F9202B76D5B700D67073 /* SubmitSubveyFormView.swift */; };
 		18C242502B88974200460E75 /* MinMaxLengthValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C2424F2B88974200460E75 /* MinMaxLengthValidation.swift */; };
-		18C7DBB82BA98B030044D9C4 /* SubveyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7DBB72BA98B030044D9C4 /* SubveyError.swift */; };
+		18C7DBB82BA98B030044D9C4 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7DBB72BA98B030044D9C4 /* NetworkError.swift */; };
 		18C84A172B74C56E00143095 /* QuestionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C84A162B74C56E00143095 /* QuestionViewModel.swift */; };
 		18C84A192B74F27900143095 /* NumberFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C84A182B74F27900143095 /* NumberFormView.swift */; };
 		18C84A1C2B75027500143095 /* Subvey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C84A1B2B75027500143095 /* Subvey.swift */; };
@@ -44,7 +44,7 @@
 		18D327F52B721EAA0095823E /* QuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D327F42B721EAA0095823E /* QuestionView.swift */; };
 		18D56EFE2B69234400B19F24 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D56EFD2B69234400B19F24 /* AppDelegate.swift */; };
 		18D56F002B69234400B19F24 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D56EFF2B69234400B19F24 /* SceneDelegate.swift */; };
-		18D56F022B69234400B19F24 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D56F012B69234400B19F24 /* ViewController.swift */; };
+		18D56F022B69234400B19F24 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D56F012B69234400B19F24 /* HomeViewController.swift */; };
 		18D56F072B69234600B19F24 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18D56F062B69234600B19F24 /* Assets.xcassets */; };
 		18D56F0A2B69234600B19F24 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18D56F082B69234600B19F24 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -55,7 +55,7 @@
 		18AEA98E2BAAEF9300A952C8 /* MinMaxArrayCountValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinMaxArrayCountValidation.swift; sourceTree = "<group>"; };
 		18AEA9902BAAF10700A952C8 /* NotEmptyValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotEmptyValidation.swift; sourceTree = "<group>"; };
 		18B6EB5B2B6A5B6000F62458 /* APIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHandler.swift; sourceTree = "<group>"; };
-		18B7939B2B73626100BBD62C /* FormRenderable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormRenderable.swift; sourceTree = "<group>"; };
+		18B7939B2B73626100BBD62C /* FormReRenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormReRenderView.swift; sourceTree = "<group>"; };
 		18B7939D2B736E2B00BBD62C /* TextFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFormView.swift; sourceTree = "<group>"; };
 		18B7939F2B737EA500BBD62C /* RadioWithInputFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioWithInputFormView.swift; sourceTree = "<group>"; };
 		18B793A32B73828D00BBD62C /* RadioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioView.swift; sourceTree = "<group>"; };
@@ -75,7 +75,7 @@
 		18B9F91E2B76C84500D67073 /* RadioNumberFomrView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioNumberFomrView.swift; sourceTree = "<group>"; };
 		18B9F9202B76D5B700D67073 /* SubmitSubveyFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitSubveyFormView.swift; sourceTree = "<group>"; };
 		18C2424F2B88974200460E75 /* MinMaxLengthValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinMaxLengthValidation.swift; sourceTree = "<group>"; };
-		18C7DBB72BA98B030044D9C4 /* SubveyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubveyError.swift; sourceTree = "<group>"; };
+		18C7DBB72BA98B030044D9C4 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		18C84A162B74C56E00143095 /* QuestionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewModel.swift; sourceTree = "<group>"; };
 		18C84A182B74F27900143095 /* NumberFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberFormView.swift; sourceTree = "<group>"; };
 		18C84A1B2B75027500143095 /* Subvey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subvey.swift; sourceTree = "<group>"; };
@@ -87,7 +87,7 @@
 		18D56EFA2B69234400B19F24 /* Subvey_Mission.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Subvey_Mission.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18D56EFD2B69234400B19F24 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18D56EFF2B69234400B19F24 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		18D56F012B69234400B19F24 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		18D56F012B69234400B19F24 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		18D56F062B69234600B19F24 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		18D56F092B69234600B19F24 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18D56F0B2B69234600B19F24 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -105,18 +105,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		18AEA9882BAAC81200A952C8 /* extension */ = {
+		18AEA9882BAAC81200A952C8 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				18AEA9892BAAC82300A952C8 /* Data.swift */,
 			);
-			path = extension;
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		18AEA98B2BAAD03600A952C8 /* Error */ = {
 			isa = PBXGroup;
 			children = (
-				18C7DBB72BA98B030044D9C4 /* SubveyError.swift */,
+				18C7DBB72BA98B030044D9C4 /* NetworkError.swift */,
 			);
 			path = Error;
 			sourceTree = "<group>";
@@ -158,6 +158,48 @@
 			path = Validators;
 			sourceTree = "<group>";
 		};
+		18C2D7452BBBC34200F90615 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				18AEA9882BAAC81200A952C8 /* Extension */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		18C2D7462BBBC39200F90615 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				18B91B0E2B87568800976F9E /* Validate */,
+				18C2D7472BBBC39D00F90615 /* Form */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		18C2D7472BBBC39D00F90615 /* Form */ = {
+			isa = PBXGroup;
+			children = (
+				18B7939B2B73626100BBD62C /* FormReRenderView.swift */,
+				18B9F91A2B76B2A300D67073 /* FormManager.swift */,
+			);
+			path = Form;
+			sourceTree = "<group>";
+		};
+		18C2D7482BBBC41A00F90615 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				18D56F012B69234400B19F24 /* HomeViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		18C2D7492BBBC42500F90615 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				18B94DAA2B6CBA3A00EEDCF6 /* QuestionViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		18C84A1A2B75026800143095 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
@@ -170,7 +212,7 @@
 		18C84A1F2B7502B600143095 /* Page */ = {
 			isa = PBXGroup;
 			children = (
-				18C84A232B75032400143095 /* Main */,
+				18C84A232B75032400143095 /* Home */,
 				18C84A202B7502D700143095 /* Question */,
 			);
 			path = Page;
@@ -179,9 +221,9 @@
 		18C84A202B7502D700143095 /* Question */ = {
 			isa = PBXGroup;
 			children = (
+				18C2D7492BBBC42500F90615 /* Controller */,
 				18C84A222B7502FC00143095 /* View */,
 				18C84A212B7502F200143095 /* ViewModel */,
-				18B94DAA2B6CBA3A00EEDCF6 /* QuestionViewController.swift */,
 			);
 			path = Question;
 			sourceTree = "<group>";
@@ -212,12 +254,12 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		18C84A232B75032400143095 /* Main */ = {
+		18C84A232B75032400143095 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				18D56F012B69234400B19F24 /* ViewController.swift */,
+				18C2D7482BBBC41A00F90615 /* Controller */,
 			);
-			path = Main;
+			path = Home;
 			sourceTree = "<group>";
 		};
 		18C84A242B75035000143095 /* Network */ = {
@@ -247,9 +289,9 @@
 		18D56EFC2B69234400B19F24 /* Subvey_Mission */ = {
 			isa = PBXGroup;
 			children = (
+				18C2D7462BBBC39200F90615 /* Core */,
+				18C2D7452BBBC34200F90615 /* Utils */,
 				18AEA98B2BAAD03600A952C8 /* Error */,
-				18AEA9882BAAC81200A952C8 /* extension */,
-				18B91B0E2B87568800976F9E /* Validate */,
 				18C84A242B75035000143095 /* Network */,
 				18C84A1F2B7502B600143095 /* Page */,
 				18C84A1A2B75026800143095 /* Entity */,
@@ -258,8 +300,6 @@
 				18D56F062B69234600B19F24 /* Assets.xcassets */,
 				18D56F082B69234600B19F24 /* LaunchScreen.storyboard */,
 				18D56F0B2B69234600B19F24 /* Info.plist */,
-				18B7939B2B73626100BBD62C /* FormRenderable.swift */,
-				18B9F91A2B76B2A300D67073 /* FormManager.swift */,
 			);
 			path = Subvey_Mission;
 			sourceTree = "<group>";
@@ -351,11 +391,11 @@
 				18AEA98F2BAAEF9300A952C8 /* MinMaxArrayCountValidation.swift in Sources */,
 				18B91B3A2B876D2D00976F9E /* CustomValidation.swift in Sources */,
 				18B7939E2B736E2B00BBD62C /* TextFormView.swift in Sources */,
-				18B7939C2B73626100BBD62C /* FormRenderable.swift in Sources */,
+				18B7939C2B73626100BBD62C /* FormReRenderView.swift in Sources */,
 				18B91B362B876D2D00976F9E /* MaxValidation.swift in Sources */,
 				18B9F9212B76D5B700D67073 /* SubmitSubveyFormView.swift in Sources */,
 				18C8A1D22B8880E10065E8A1 /* ValidateError.swift in Sources */,
-				18C7DBB82BA98B030044D9C4 /* SubveyError.swift in Sources */,
+				18C7DBB82BA98B030044D9C4 /* NetworkError.swift in Sources */,
 				18C8A1CE2B88486C0065E8A1 /* NotEqualValidation.swift in Sources */,
 				18C84A1C2B75027500143095 /* Subvey.swift in Sources */,
 				18B793A82B73A07A00BBD62C /* RadioFormView.swift in Sources */,
@@ -365,7 +405,7 @@
 				18C84A1E2B75028E00143095 /* Answer.swift in Sources */,
 				18AEA98A2BAAC82300A952C8 /* Data.swift in Sources */,
 				18B91B482B876E7700976F9E /* CustomValidator.swift in Sources */,
-				18D56F022B69234400B19F24 /* ViewController.swift in Sources */,
+				18D56F022B69234400B19F24 /* HomeViewController.swift in Sources */,
 				18B793A42B73828D00BBD62C /* RadioView.swift in Sources */,
 				18B6EB5C2B6A5B6000F62458 /* APIHandler.swift in Sources */,
 				18B9F91D2B76B7EB00D67073 /* FormCheckable.swift in Sources */,

@@ -53,7 +53,7 @@ final class QuestionView: UIView {
         }
     }
     
-    typealias FormView = (UIView & FormRenderable)
+    typealias FormView = (UIView & FormReRenderView)
     
     var currentView: FormView? = nil {
         didSet {
