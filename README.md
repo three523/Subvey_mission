@@ -10,24 +10,27 @@
 
 ## 파일 구조
 ```
-Subvey_Mission
-│  ├─ Entity // API를 통해 가져온 json 데이터 구조체 디텍토리
-│  ├─ Error  // Validation을 제외한 일반적인 Error 관련 디렉토리
-│  ├─ FormManager.swift // Form의 모든 값을 가지고 있는 클래스
-|  ├─Network // 네트워크 관련 작업 디렉토리
-│  ├─ Page // 각 화면별 디렉토리
-│  │  ├─ Main // 첫 시작 화면
-│  │  └─ Question // 설문조사 화면
-│  │     ├─ View // Question 화면에 필요한 View 디텍토리
-│  │     └─ ViewModel // Question 화면에 필요한 ViewModel
-| FormRenderable.swift // View가 다시 그려질 수 있도록 만든 프로토콜
-|  ├─Validate
-│  │  ├─ ValidateError.swift // Validate 실패할때 message를 담고 있는 구조체
-|  |  ├─ Validations // validation 작업을 하는 클래스들의 디렉토리(emailValidation, MaxLengthValidation 등등)
-│  │  └─ Validators // Validation을 추가하거나 삭제하는등 validation 작업을 모아놓은 클래스 *CustomValidator 제거하기*
-│  └─ extension
-│     └─ Data.swift // Data 데이터 타입 디코딩에 문제가 생길때 에러가 print로 출력되도록 extension
-└─ doc
+├─ Subvey_Mission
+│  ├─ Core // 가장 중요한 기능들을 모아놓은 디렉토리
+│  │  ├─ Form // From 관련 기능들을 모아놓은 디렉토리
+│  │  └─ Validate // 유효성 검사 관련 기능들을 모아놓은 디렉토리
+│  │     ├─ ValidateError.swift
+│  │     ├─ Validations // 각종 유효성 검사를 진행하는 클래스 디렉토리
+│  │     └─ Validators // 유효성 검사를 모아서 작업 할 수 있도록 하는 클래스 디렉토리
+│  ├─ Entity // 설문 조사 관련 데이터 디렉토리
+│  ├─ Error // 네트워크 에러와 관련된 디렉토리
+│  ├─ Network // 네트워크 작업 관련 디렉토리
+│  ├─ Page
+│  │  ├─ Home
+│  │  │  └─ Controller
+│  │  └─ Question
+│  │     ├─ Controller
+│  │     ├─ View // 설문 조사화면에 필요한 View의 디렉토리 ( 글자타입 설문 뷰, 체크타입 설문 뷰 등등 )
+│  │     └─ ViewModel
+│  └─ Utils // 각종 도움을 주는 함수와 클래스 디렉토리
+│     └─ Extension
+├─ doc // 구현 설명 문서 디렉토리
+└─ mock // API Json 파일 디렉토리
 ```
 ## 로직
 ```mermaid
