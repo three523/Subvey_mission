@@ -64,6 +64,20 @@ Postman의 목업 서버를 사용하여 구현함
 - Json 형식에 따라 다른 UI가 보이도록 구현    
 - [Validation 기능 구현](https://github.com/three523/Subvey_mission/blob/main/doc/Validation_%EA%B8%B0%EB%8A%A5%EA%B5%AC%ED%98%84.md)    
 - [Form의 내용에 따라 다른 Validate 구현](https://github.com/three523/Subvey_mission/blob/main/doc/FormView%EA%B5%AC%ED%98%84.md)
+
+## 컨벤션
+
+### 풀리퀘스트, 커밋 컨벤션
+- Feat: 새로운 기능 추가   
+- Fix: 버그 수정    
+- Doc: 문서 수정   
+- Style: 들여쓰기, 줄바꿈 등등 코드 변경이 없는 경우   
+= Refactor: 코드 리펙토링   
+= Test: 테스트코드 관련   
+= chore: 빌드 관련, 패키치 관련 작업   
+
+## 코드 컨벤션
+
 ## 아쉬웠던점
 일단 다양한 타입이 올 수 있다는 것이 디코딩 작업을 하는 것도 생각보다 복잡하다고 느껴졌다.    
 또한 각자 타입에 맞는 Validate를 해주고 다시 그려야 하다보니 굉장히 많은 조건문이 생기는 문제가 발생했다.    
